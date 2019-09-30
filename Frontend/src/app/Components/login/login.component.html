@@ -2,33 +2,45 @@
     <div class="col col-sm-8 col-md-7 col-lg-4 align-self-center">
         <div class="card text-center">
             <div class="card-header gradient text-white">
-                    <img src="https://image.flaticon.com/icons/svg/1832/1832056.svg" width="80" height="80" class="d-inline-block align-top"
-                    alt="">
+                <img src="https://image.flaticon.com/icons/svg/1832/1832056.svg" width="80" height="80"
+                    class="d-inline-block align-top" alt="">
             </div>
             <div class="card-body">
-                <form action="javascript:;">
-                    <div class="input-group flex-wrap">
+                <form action="javascript:;" [formGroup]="FormControl" (ngSubmit)="onSubmit()"
+                    [ngClass]="{'was-validated': !FormControl.valid && Submited}">
+                    <div class="input-group">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="addon-wrapping">
+                            <span class="input-group-text">
                                 <fa-icon [icon]="IdCardAlt"></fa-icon>
                             </span>
                         </div>
                         <input type="text" class="form-control" placeholder="Código Estudiantil" aria-label="Username"
-                            aria-describedby="addon-wrapping">
+                            aria-describedby="addon-wrapping" formControlName="Username" required minlength="10">
+                        <div class="invalid-feedback">
+                            Ingrese Código Estudiantil Válido
+                        </div>
                     </div>
-                    <div class="input-group flex-wrap pt-2">
+                    <div class="input-group pt-2">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="addon-wrapping">
+                            <span class="input-group-text">
                                 <fa-icon [icon]="Key"></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Contraseña" aria-label="Password"
-                            aria-describedby="addon-wrapping">
+                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password"
+                            aria-describedby="addon-wrapping" formControlName="Password" required>
+                        <div class="invalid-feedback justify-content-start">
+                            Contraseña Es Requerida
+                        </div>
                     </div>
                     <div class="form-group pt-3 mb-0">
-                        <button type="button" class="btn btn-primary w-50 gradient">
-                            <fa-icon [icon]="Login"></fa-icon>
-                            Login
+                        <button type="submit" class="btn btn-primary w-50 gradient" [disabled]="Loading">
+                            <div [hidden]="Loading">
+                                <fa-icon [icon]="Login"></fa-icon>
+                                Login
+                            </div>
+                            <div class="spinner-border text-light" role="status" [hidden]="!Loading">
+                                <span class="sr-only">Loading...</span>
+                            </div>
                         </button>
                     </div>
                 </form>
