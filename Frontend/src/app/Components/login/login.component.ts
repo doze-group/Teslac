@@ -1,8 +1,8 @@
-import { User } from './../../Models/user';
 import { Component, OnInit } from '@angular/core';
 import { faIdCardAlt, faKey, faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import { FormGroup } from '@angular/forms';
 import iziToast from 'izitoast';
+import { User } from 'src/app/Models/user';
 
 @Component({
   selector: 'app-login',
@@ -10,12 +10,10 @@ import iziToast from 'izitoast';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent implements OnInit {
-  IdCardAlt = faIdCardAlt;
-  Key = faKey;
-  Login = faSignInAlt;
   FormControl: FormGroup = new User().FormLogin();
   Submited: Boolean = false;
   Loading: Boolean = false;
+  Icons: Array<any> = [faIdCardAlt, faKey, faSignInAlt];
 
   constructor() { }
 
@@ -32,7 +30,8 @@ export class LoginComponent implements OnInit {
       iziToast.success({
         title: 'Usuario',
         message: `\n\Código: ${this.FormControl.value.Username}\n\Cotraseña: ${this.FormControl.value.Password}`
-      })
+      });
+      this.FormControl.reset();
     } else {
       console.log(this.FormControl.value);
     }

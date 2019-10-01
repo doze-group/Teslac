@@ -1,12 +1,20 @@
-<!-- Image and text -->
-<nav class="navbar navbar-dark gradient">
-    <a class="navbar-brand" href="#">
-        <img src="https://image.flaticon.com/icons/svg/1832/1832056.svg" width="30" height="30" class="d-inline-block align-top"
-            alt="">
-        Teslac
-    </a>
-</nav>
-
-<div class="container-fluid pt-3 full">
-    <router-outlet></router-outlet>
+<div class="container-fluid d-flex h-100 flex-column px-0 mx-0">
+    <!-- I want this container to stretch to the height of the parent -->
+    <div class="row">
+        <div class="col">
+            <nav class="navbar navbar-toggleable-md sticky-top text-uppercase gradient">
+                <a class="navbar-brand text-white mr-0">
+                    <img src="https://image.flaticon.com/icons/svg/1832/1832056.svg" width="30" height="30"
+                        class="d-inline-block align-top mr-1" alt="">
+                    Teslac
+                </a>
+            </nav>
+        </div>
+    </div>
+    <div class="row fill d-flex">
+        <!-- I want this row height to filled the remaining height -->
+        <div class="col portlet-container portlet-dropzone">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>
