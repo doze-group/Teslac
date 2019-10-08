@@ -28,3 +28,13 @@ export class User {
         });
     }
 }
+
+export class UserLogin {
+    Username: String;
+    Password: String;
+
+    constructor(Username: String, Password: String){
+        this.Username = Username;
+        this.Password = Password;
+    }
+}
