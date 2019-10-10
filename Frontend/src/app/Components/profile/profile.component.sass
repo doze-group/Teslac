@@ -1,0 +1,42 @@
+.card-img-profile
+  max-width: 100%
+  border-radius: 50%
+  margin-top: -90px
+  border: 5px solid white
+  height: 140px
+  width: 140px
+
+@media (min-width: 576px) 
+  .card-columns
+    column-count: 1
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) 
+  .card-columns
+    column-count: 2
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) 
+  .card-columns
+    column-count: 3
+
+.card-columns .card
+  -webkit-border-radius: 0px
+  -moz-border-radius: 0px
+  border-radius: 10px
+  justify-content: space-between
+  background-color: transparent
+  -webkit-box-shadow: rgba(0, 0, 0, 0.8) 0px 0 0px
+  -moz-box-shadow: rgba(0, 0, 0, 0.8) 0 0 0px
+  box-shadow: rgba(0, 0, 0, 0.8) 0 0 0px
+  border-color: white
+
+.card-columns .card .card-header
+  border-radius: 10px 10px 0 0
+
+.card
+  -webkit-border-radius: 10px
+  -moz-border-radius: 10px
+  border-radius: 10px
+
+.card-header
+  border-radius: 10px 10px 0 0

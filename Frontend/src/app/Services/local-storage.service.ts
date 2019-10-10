@@ -12,9 +12,9 @@ export class LocalStorageService<T> {
   constructor() { }
 
   InterfaceType: SecureInterface<T> = {
-    Hash: (Key) => CryptoJS.SHA256(Key, process.env.SECRET_KEY).toString(),
-    Decrypt: (Data) => CryptoJS.AES.decrypt(Data, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8),
-    Encrypt: (Data) => CryptoJS.AES.encrypt(Data, process.env.SECRET_KEY).toString(CryptoJS.enc.Utf8)
+    Hash: (Key) => CryptoJS.SHA256(Key, '').toString(),
+    Decrypt: (Data) => CryptoJS.AES.decrypt(Data, '').toString(CryptoJS.enc.Utf8),
+    Encrypt: (Data) => CryptoJS.AES.encrypt(Data, '').toString(CryptoJS.enc.Utf8)
   };
 
   private LocalStorge = new SecureStorage(localStorage, this.InterfaceType);
