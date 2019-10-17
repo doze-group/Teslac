@@ -76,7 +76,7 @@
     }
   },
   "home": {
-    "title": "DSpace Angular :: Startseite",
+    "title": "Teslac :: Startseite",
     "description": "",
     "top-level-communities": {
       "head": "Bereiche in DSpace",
@@ -84,7 +84,7 @@
     }
   },
   "search": {
-    "title": "DSpace Angular :: Suche",
+    "title": "Teslac :: Suche",
     "description": "",
     "form": {
       "search": "Suche",
@@ -157,7 +157,7 @@
   "admin": {
     "registries": {
       "metadata": {
-        "title": "DSpace Angular :: Metadatenreferenzliste",
+        "title": "Teslac :: Metadatenreferenzliste",
         "head": "Metadatenreferenzliste",
         "description": "Die Metadatenreferenzliste beinhaltet alle Metadatenfelder, die zur Verfügung stehen. Die Felder können in unterschiedlichen Schemata enthalten sein. Nichtsdestotrotz benötigt DSpace mindestens qualifiziertes Dublin Core.",
         "schemas": {
@@ -170,7 +170,7 @@
         }
       },
       "schema": {
-        "title": "DSpace Angular :: Referenzliste der Metadatenschemata",
+        "title": "Teslac :: Referenzliste der Metadatenschemata",
         "head": "Metadatenschemata",
         "description": "Dies ist das Metadatenschema für  \"{{namespace}}\".",
         "fields": {
@@ -183,7 +183,7 @@
         }
       },
       "bitstream-formats": {
-        "title": "DSpace Angular :: Referenzliste der Dateiformate",
+        "title": "Teslac :: Referenzliste der Dateiformate",
         "head": "Referenzliste der Dateiformate",
         "description": "Diese Liste enhtält die in diesem Repositorium zulässigen Dateiformate und den jeweiligen Unterstützungsgrad.",
         "formats": {

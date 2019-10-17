@@ -76,7 +76,7 @@
     }
   },
   "home": {
-    "title": "DSpace Angular :: Domů",
+    "title": "Teslac :: Domů",
     "description": "",
     "top-level-communities": {
       "head": "Komunity v DSpace",
@@ -84,7 +84,7 @@
     }
   },
   "search": {
-    "title": "DSpace Angular :: Hledat",
+    "title": "Teslac :: Hledat",
     "description": "",
     "form": {
       "search": "Hledat",
@@ -157,7 +157,7 @@
   "admin": {
     "registries": {
       "metadata": {
-        "title": "DSpace Angular :: Registr metadat",
+        "title": "Teslac :: Registr metadat",
         "head": "Registr metadat",
         "description": "Registr metadat je seznam všech metadatových polí dostupných v repozitáři. Tyto pole mohou být rozdělena do více schémat. DSpace však vyžaduje použití schématu kvalifikový Dublin Core.",
         "schemas": {
@@ -170,7 +170,7 @@
         }
       },
       "schema": {
-        "title": "DSpace Angular :: Registr schémat metadat",
+        "title": "Teslac :: Registr schémat metadat",
         "head": "Metadata Schema",
         "description": "Toto je schéma metadat pro „{{namespace}}“.",
         "fields": {
@@ -183,7 +183,7 @@
         }
       },
       "bitstream-formats": {
-        "title": "DSpace Angular :: Registr formátů souborů",
+        "title": "Teslac :: Registr formátů souborů",
         "head": "Registr formátů souborů",
         "description": "Tento seznam formátů souborů poskytuje informace o známých formátech a o úrovni jejich podpory.",
         "formats": {

@@ -432,7 +432,7 @@
     }
   },
   "home": {
-    "title": "DSpace Angular :: Home",
+    "title": "Teslac :: Home",
     "description": "",
     "top-level-communities": {
       "head": "Communities in DSpace",
@@ -492,24 +492,24 @@
   },
   "search": {
     "journal": {
-      "title": "DSpace Angular :: Journal Search",
+      "title": "Teslac :: Journal Search",
       "results": {
         "head": "Journal Search Results"
       }
     },
     "person": {
-      "title": "DSpace Angular :: Person Search",
+      "title": "Teslac :: Person Search",
       "results": {
         "head": "Person Search Results"
       }
     },
     "publication": {
-      "title": "DSpace Angular :: Publication Search",
+      "title": "Teslac :: Publication Search",
       "results": {
         "head": "Publication Search Results"
       }
     },
-    "title": "DSpace Angular :: Search",
+    "title": "Teslac :: Search",
     "description": "",
     "form": {
       "search": "Search",
@@ -656,7 +656,7 @@
   "admin": {
     "registries": {
       "metadata": {
-        "title": "DSpace Angular :: Metadata Registry",
+        "title": "Teslac :: Metadata Registry",
         "head": "Metadata Registry",
         "description": "The metadata registry maintains a list of all metadata fields available in the repository. These fields may be divided amongst multiple schemas. However, DSpace requires the qualified Dublin Core schema.",
         "form": {
@@ -676,7 +676,7 @@
         }
       },
       "schema": {
-        "title": "DSpace Angular :: Metadata Schema Registry",
+        "title": "Teslac :: Metadata Schema Registry",
         "head": "Metadata Schema",
         "description": "This is the metadata schema for \"{{namespace}}\".",
         "return": "Return",
@@ -716,7 +716,7 @@
         }
       },
       "bitstream-formats": {
-        "title": "DSpace Angular :: Bitstream Format Registry",
+        "title": "Teslac :: Bitstream Format Registry",
         "head": "Bitstream Format Registry",
         "description": "This list of bitstream formats provides information about known formats and their support level.",
         "formats": {
@@ -882,7 +882,7 @@
   "login": {
     "title": "Login",
     "form": {
-      "header": "Please log in to DSpace",
+      "header": "Please log in to Teslac",
       "email": "Email address",
       "forgot-password": "Have you forgotten your password?",
       "new-user": "New user? Click here to register.",

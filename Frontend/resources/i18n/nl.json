@@ -76,7 +76,7 @@
     }
   },
   "home": {
-    "title": "DSpace Angular :: Home",
+    "title": "Teslac :: Home",
     "description": "",
     "top-level-communities": {
       "head": "Communities in DSpace",
@@ -84,7 +84,7 @@
     }
   },
   "search": {
-    "title": "DSpace Angular :: Zoek",
+    "title": "Teslac :: Zoek",
     "description": "",
     "form": {
       "search": "Zoek",
@@ -157,7 +157,7 @@
   "admin": {
     "registries": {
       "metadata": {
-        "title": "DSpace Angular :: Metadata Register",
+        "title": "Teslac :: Metadata Register",
         "head": "Metadata Register",
         "description": "Het metadataregister omvat de lijst van alle metadatavelden die beschikbaar zijn in het systeem. Deze velden kunnen verspreid zijn over verschillende metadataschema's. Het qualified Dublin Core schema (dc) is een verplicht schema en kan niet worden verwijderd.",
         "schemas": {
@@ -170,7 +170,7 @@
         }
       },
       "schema": {
-        "title": "DSpace Angular :: Metadata Schema Register",
+        "title": "Teslac :: Metadata Schema Register",
         "head": "Metadata Schema",
         "description": "Dit is het metadataschema voor \"{{namespace}}\".",
         "fields": {
@@ -183,7 +183,7 @@
         }
       },
       "bitstream-formats": {
-        "title": "DSpace Angular :: Bitstream Formaat Register",
+        "title": "Teslac :: Bitstream Formaat Register",
         "head": "Bitstream Formaat Register",
         "description": "Deze lijst van Bitstream formaten biedt informatie over de formaten die in deze repository zijn toegelaten en op welke manier ze ondersteund worden. De term Bitstream wordt in DSpace gebruikt om een bestand aan te duiden dat samen met metadata onderdeel uitmaakt van een item. De naam bitstream duidt op het feit dat het bestand achterliggend wordt opgeslaan zonder bestandsextensie.",
         "formats": {

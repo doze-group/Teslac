@@ -10,7 +10,7 @@ module.exports = {
   // The REST API server settings.
   rest: {
     ssl: true,
-    host: 'dspace7.4science.cloud',
+    host: 'localhost',
     port: 443,
     // NOTE: Space is capitalized because 'namespace' is a reserved string in TypeScript
     nameSpace: '/dspace-spring-rest/api'
@@ -121,10 +121,10 @@ module.exports = {
   // Log directory
   logDirectory: '.',
   // NOTE: will log all redux actions and transfers in console
-  debug: false,
+  debug: true,
   // Default Language in which the UI will be rendered if the user's browser language is not an active language
   defaultLanguage: 'en',
-  // Languages. DSpace Angular holds a message catalog for each of the following languages. When set to active, users will be able to switch to the use of this language in the user interface.
+  // Languages. Teslac holds a message catalog for each of the following languages. When set to active, users will be able to switch to the use of this language in the user interface.
   languages: [{
     code: 'en',
     label: 'English',
