@@ -1,0 +1,9 @@
+{
+  "watch": [
+    "src/app",
+    "config",
+    "src/index.html"
+  ],
+  "ext": "js ts json html",
+  "delay": "50"
+}
