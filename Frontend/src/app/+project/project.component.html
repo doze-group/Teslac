@@ -1,0 +1,51 @@
+<div class="row h-100 w-100 mx-0">
+  <div class="col-11 col-sm-9 col-md-8">
+    <div class="row w-100 mx-0 pb-2">
+      <ul class="nav nav-tabs justify-content-center w-100">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Tablero</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Colaboradores</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Versiones</a>
+        </li>
+      </ul>
+    </div>
+    <div class="row w-100 h-100 mx-0">
+      <div class="card-columns">
+        <div class="card border-light shadow-sm" *ngFor="let item of [1,1,1,1,1,1]; let i=index">
+          <div class="card-header text-white">Header</div>
+          <div class="card-body">
+            <h5 class="card-title">Light card title</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up
+              the
+              bulk
+              of the card's content.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col">
+    <div class="card text-center shadow">
+      <div class="card-header text-white">
+        Mensajes
+      </div>
+      <div class="card-body overflow-auto" style="height: 400px;">
+        <ds-message [Messages]="[1,1,1,1,1,1,1,1,1,1,1]"></ds-message>
+      </div>
+      <div class="card-footer">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Escribe..." aria-label="Escribe..." aria-describedby="basic-addon">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">
+              Enviar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -28,6 +28,7 @@ export function getCommunityModulePath() {
       { path: 'search', loadChildren: './+search-page/search-page.module#SearchPageModule' },
       { path: 'browse', loadChildren: './+browse-by/browse-by.module#BrowseByModule' },
       { path: 'profile', loadChildren: './+profile/profile.module#ProfileModule' },
+      { path: 'project', loadChildren: './+project/project.module#ProjectModule' },
       { path: 'admin', loadChildren: './+admin/admin.module#AdminModule', canActivate: [AuthenticatedGuard] },
       { path: 'login', loadChildren: './+login-page/login-page.module#LoginPageModule' },
       { path: 'logout', loadChildren: './+logout-page/logout-page.module#LogoutPageModule' },
