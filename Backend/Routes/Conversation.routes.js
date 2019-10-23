@@ -3,9 +3,9 @@ const { isAuth } = require('../Middlewares/Auth.middleware');
 
 //this routes of conversation model
 exports.ConversationRoutes = Router => {
-    Router.get('/Conversation', isAuth, _Get);
-    Router.get('/Conversation/:Id', isAuth, _GetOne);
-    Router.post('/Conversation', isAuth, _Post);
-    Router.put('/Conversation/:Id', isAuth, _Put);
-    Router.delete('/Conversation/:Id', isAuth, _Delete);
+    Router.get('/conversation', isAuth, _Get);
+    Router.get('/conversation/:Id', isAuth, _GetOne);
+    Router.post('/conversation', isAuth, _Post);
+    Router.put('/conversation/:Id', isAuth, _Put);
+    Router.delete('/conversation/:Id', isAuth, _Delete);
 }

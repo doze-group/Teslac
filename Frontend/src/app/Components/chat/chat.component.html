@@ -1,0 +1,39 @@
+<div *ngIf="Loading | async; else noLoad">
+    <div class="card bg-transparent chat animated zoomIn">
+        <div class="card-header border-shadow">
+            <div class="row">
+                <div class="col">
+                    <div class="row align-items-center">
+                        <img [src]="Chat.UrlImage" class="rounded-circle ml-2" alt="Profile" height="30" width="30"
+                            id="imageChat" />
+                        <div class="col pl-1">
+                            <p class="font-weight-bold mb-0 ml-1">{{Chat.DisplayName}}</p>
+                            <div id="typing" class="text-info mb-0 ml-1"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body border-shadow overflow-auto" id="scroll">
+            Hola Mensajes
+        </div>
+        <div class="card-footer">
+            <div class="input-group">
+                <textarea name="" class="form-control type_msg" placeholder="Type your message..." id="Message"
+                    style="resize: none;"></textarea>
+                <div class="input-group-append">
+                    <button class="input-group-text send_btn">
+                            <fa-icon [icon]="Icons[0]"></fa-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #noLoad>
+    <div class="row pt-3 justify-content-center">
+        <div class="spinner-border text-primary" role="status" [hidden]="!Loading">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</ng-template>

@@ -3,9 +3,9 @@ const { isAuth } = require('../Middlewares/Auth.middleware');
 
 //this routes of grou`p model
 exports.GroupRoutes = Router => {
-    Router.get('/Group', isAuth, _Get);
-    Router.post('/Group', isAuth, _Post);
-    Router.put('/Group/:Id', isAuth, _Put);
-    Router.delete('/Group/:Id', isAuth, _Delete);
-    Router.delete('/Group/Member/:Id', isAuth, _DeleteMember);
+    Router.get('/group', isAuth, _Get);
+    Router.post('/group', isAuth, _Post);
+    Router.put('/group/:Id', isAuth, _Put);
+    Router.delete('/group/:Id', isAuth, _Delete);
+    Router.delete('/group/member/:Id', isAuth, _DeleteMember);
 }

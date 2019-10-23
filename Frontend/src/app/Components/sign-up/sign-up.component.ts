@@ -33,6 +33,7 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem('User', JSON.stringify(user));
         this._router.navigate(['/profile']);
       }).catch(err => {
+        console.log(err);
         this.Loading = false;
         iziToast.error({ message: 'Ha ocurrido un error vuelva a intentar' });
       });

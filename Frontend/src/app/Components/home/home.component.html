@@ -15,7 +15,7 @@
             </div>
         </a>
         <div class="row w-100 justify-content-between mx-0 pt-3">
-            <button type="button" class="btn btn-link text-white">
+            <button type="button" class="btn btn-link text-white" (click)="ChangeMain()">
                 <fa-icon [icon]="Icons[0]" size="lg"></fa-icon>
             </button>
             <button type="button" class="btn btn-link text-white">
@@ -42,7 +42,7 @@
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                         data-parent="#accordionExample">
                         <div class="card-body px-0 pt-0 pb-0">
-                            Hola Mundo
+                            <ListConversations [Conversations]="Conversations" [isGroup]="false" [Change]="ChangeMain"></ListConversations>
                         </div>
                     </div>
                 </div>
@@ -78,4 +78,21 @@
             </div>
         </div>
     </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-xl-10 pt-3 px-4 h-100">
+        <div *ngIf="Loading | async; else noLoad">
+            <div *ngIf="Main | async; else elseTemplate">
+                <ListUsers [Conversations]="Conversations" [Change]="ChangeMain"></ListUsers>
+            </div>
+            <ng-template #elseTemplate>
+                <App-Chat [ChatBind]="Chat"></App-Chat>
+            </ng-template>
+        </div>
+        <ng-template #noLoad>
+            <div class="row pt-3 justify-content-center">
+                <div class="spinner-border text-primary" role="status" [hidden]="!Loading">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+        </ng-template>
+    </main>
 </div>

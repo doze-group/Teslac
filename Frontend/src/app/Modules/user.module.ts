@@ -10,13 +10,17 @@ import { AuthModule } from './auth.module';
 import { ProjectService } from '../Services/project.service';
 import { ListconversationsComponent } from '../Components/listconversations/listconversations.component';
 import { ListusersComponent } from '../Components/listusers/listusers.component';
+import { GroupService } from '../Services/group.service';
+import { UserService } from '../Services/user.service';
+import { ChatComponent } from '../Components/chat/chat.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
     ProfileComponent,
     ListconversationsComponent,
-    ListusersComponent
+    ListusersComponent,
+    ChatComponent
   ],
   imports: [
     CommonModule,
@@ -26,6 +30,6 @@ import { ListusersComponent } from '../Components/listusers/listusers.component'
     HttpClientModule,
     AuthModule
   ],
-  providers: [ProjectService]
+  providers: [ProjectService, GroupService, UserService]
 })
 export class UserModule { }
