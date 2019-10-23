@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
+
+  User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
+  Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle];
 
   constructor() { }
 

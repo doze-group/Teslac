@@ -11,13 +11,39 @@
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text">
+                                <fa-icon [icon]="Icons[4]"></fa-icon>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Documento Identidad" aria-label="Username"
+                            aria-describedby="addon-wrapping" formControlName="Username" required minlength="10">
+                        <div class="invalid-feedback">
+                            Ingrese Documento Válido
+                        </div>
+                    </div>
+                    <div class="input-group pt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
                                 <fa-icon [icon]="Icons[0]"></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Código Institucional" aria-label="Username"
-                            aria-describedby="addon-wrapping" formControlName="Username" required minlength="10">
+                        <input type="text" class="form-control" placeholder="Código institucional"
+                            aria-label="Institutional" aria-describedby="addon-wrapping" formControlName="Institutional"
+                            required minlength="10">
                         <div class="invalid-feedback">
-                            Ingrese Código Institucional Válido
+                            Ingrese Código institucional Válido
+                        </div>
+                    </div>
+                    <div class="input-group pt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon [icon]="Icons[6]"></fa-icon>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="DisplayName"
+                            aria-describedby="addon-wrapping" formControlName="DisplayName" required minlength="1"
+                            maxlength="50">
+                        <div class="invalid-feedback">
+                            Ingrese Nombre Válido
                         </div>
                     </div>
                     <div class="input-group pt-2">
@@ -38,10 +64,24 @@
                                 <fa-icon [icon]="Icons[3]"></fa-icon>
                             </span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Email" aria-label="Email"
+                        <input type="email" class="form-control" placeholder="Email" aria-label="Email"
                             aria-describedby="addon-wrapping" formControlName="Email" required>
                         <div class="invalid-feedback justify-content-start">
                             Email Es Requerido
+                        </div>
+                    </div>
+                    <div class="input-group pt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon [icon]="Icons[5]"></fa-icon>
+                            </span>
+                        </div>
+                        <select class="form-control" formControlName="Role" required>
+                            <option value="" disabled>Escoger Role</option>
+                            <option *ngFor="let role of Roles" [ngValue]="role">{{role}}</option>
+                        </select>
+                        <div class="invalid-feedback justify-content-start">
+                            Role Es Requerido
                         </div>
                     </div>
                     <div class="form-group pt-3 mb-0">
@@ -55,7 +95,7 @@
                         </button>
                     </div>
                     <div class="form-group pt-1 mb-0">
-                        <a routerLink="/Login" routerLinkActive="active">¿Tienes Cuenta?</a>
+                        <a routerLink="/login" routerLinkActive="active">¿Tienes Cuenta?</a>
                     </div>
                 </form>
             </div>

@@ -1,0 +1,6 @@
+<ul class="list-group w-100 bg-transparent">
+    <button *ngFor="let item of Conversations | async" class="list-group-item bg-transparent d-flex justify-content-start align-items-center">
+        <img [src]="item.UrlImage" width="30" height="30">
+        <h6 className="text-center font-weight-bold text-white mb-0 ml-1">{{item.DisplayName}}</h6>
+    </button>
+</ul>

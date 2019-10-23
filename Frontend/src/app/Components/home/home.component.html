@@ -1,3 +1,81 @@
-<div class="row justify-content-center animated zoomIn" style="height: 100%">
-    Desde Aqui
+<div class="row mx-0" style="height: 100%">
+    <nav class="col-md-3 col-xl-2 d-none d-md-block gradient">
+        <a class="row pt-3 justify.content-center mx-0" style="cursor: pointer;" [routerLink]="['/profile']"
+            routerLinkActive="active">
+            <div class="col-6 col-md-5 col-lg-4 col-xl-5 align-self-center pl-1">
+                <img [src]="this.User.User.UrlImage" class="rounded-circle img-fluid float-left"
+                    style="height: 80px; width: 80px;">
+            </div>
+            <div class="col pl-1 align-self-center">
+                <div class="row">
+                    <h6 class="text-center font-weight-bold text-white">
+                        {{User.User.DisplayName}}
+                    </h6>
+                </div>
+            </div>
+        </a>
+        <div class="row w-100 justify-content-between mx-0 pt-3">
+            <button type="button" class="btn btn-link text-white">
+                <fa-icon [icon]="Icons[0]" size="lg"></fa-icon>
+            </button>
+            <button type="button" class="btn btn-link text-white">
+                <fa-icon [icon]="Icons[1]" size="lg"></fa-icon>
+            </button>
+        </div>
+        <div class="row pt-3 justify-content-center">
+            <div class="accordion w-100" id="accordionExample">
+                <div class="card bg-transparent w-100">
+                    <div class="card-header" id="headingOne">
+                        <h2 class="mb-0">
+                            <button class="btn text-white w-100" type="button" data-toggle="collapse"
+                                data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
+                                id="collapse">
+                                <h6 class="text-center font-weight-bold text-white float-left">
+                                    Mensajes
+                                </h6>
+                                <span class="float-right text-white">
+                                    <fa-icon [icon]="Icons[2]"></fa-icon>
+                                </span>
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                        data-parent="#accordionExample">
+                        <div class="card-body px-0 pt-0 pb-0">
+                            Hola Mundo
+                        </div>
+                    </div>
+                </div>
+                <div class="card bg-transparent">
+                    <div class="card-header" id="headingTwo">
+                        <h2 class="mb-0">
+                            <div class="row w-100 mx-0 justify-content-between">
+                                <button class="btn text-white w-75" type="button" data-toggle="collapse"
+                                    data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"
+                                    id="collapse">
+                                    <h6 class="text-center font-weight-bold text-white float-left">
+                                        Grupos
+                                    </h6>
+                                    <span class="float-right text-white">
+                                        <fa-icon [icon]="Icons[2]"></fa-icon>
+                                    </span>
+                                </button>
+                                <button class="btn text-white w-25" type="button" data-toggle="modal"
+                                    data-target="#Modal">
+                                    <span class="float-right text-white">
+                                        <fa-icon [icon]="Icons[3]"></fa-icon>
+                                    </span>
+                                </button>
+                            </div>
+                        </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                        <div class="card-body px-0 pt-0 pb-0">
+                            Hola Mundo2
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
 </div>

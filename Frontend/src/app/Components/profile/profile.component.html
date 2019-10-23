@@ -1,60 +1,99 @@
 <div class="row justify-content-center animated zoomIn w-100 mr-0 ml-0" style="height: 100%">
-    <div class="col-11 col-md-4 col-xl-3 align-self-start pt-2">
-        <div class="card text-center shadow">
-            <div class="card-header gradient" style="height: 140px;"></div>
-            <div class="card-body">
-                <div class="row w-100 justify-content-center mr-0 ml-0">
-                    <div class="card-block card-img-profile">
-                        <img class="img-fluid"
-                            src="http://galbason.com/wp-content/uploads/2016/04/gal-bason-profile-round.png"
-                            alt="card image">
-                    </div>
-                </div>
-                <h4 class="card-title">La Chica De La Foto</h4>
-                <p class="card-text">Esto es una pequeña muestra de lo que es el poder de de la chica de la foto
-                    cuando merlín conquisto todo el reino cuántico, obtuvo super poderes como la super posición
-                    cuántica podia estar en 2 lugares al mismo tiempo y al mismo tiempo no estarlo le sirvio de
-                    excusa para faltar a la universidad y lo estallaron.</p>
-            </div>
-        </div>
-    </div>
-    <div class="col-11 col-md-8 col-xl-9 pt-2">
-        <div class="row w-100 pb-2">
-            <ul class="nav nav-tabs justify-content-center w-100">
-                <li class="nav-item">
-                    <a class="nav-link active" href="#">Visión Muestral</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Proyectos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Tareas</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Grupos</a>
-                </li>
-            </ul>
-        </div>
-        <div class="row w-100">
-            <div class="card-columns">
-                <div class="card border-light shadow-sm" *ngFor="let item of [1,1,1,1,1,1]; let i=index">
-                    <div class="card-header">Header</div>
+    <div class="col">
+        <div class="row justify-content-center">
+            <div class="col-11 col-md-9 col-xl-7 align-self-center pt-2">
+                <div class="card text-center shadow">
+                    <div class="card-header gradient" style="height: 140px;"></div>
                     <div class="card-body">
-                        <h5 class="card-title">Light card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up
-                            the
-                            bulk
-                            of the card's content.</p>
+                        <div class="row w-100 justify-content-center mr-0 ml-0">
+                            <div class="card-block card-img-profile">
+                                <img class="img-fluid" [src]="User.User.UrlImage" alt="card image">
+                            </div>
+                        </div>
+                        <h4 class="card-title">{{User.User.DisplayName}}</h4>
+                        <p class="card-text">{{User.User.Description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2 justify-content-center">
+            <div class="col-11 align-self-center">
+                <div class="row w-100 pb-2 mx-0">
+                    <ul class="nav nav-tabs justify-content-center w-100">
+                        <li class="nav-item">
+                            <div class="nav-link active">
+                                Proyectos
+                                <fa-icon [icon]="Icons[0]" class="pl-1"></fa-icon>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
+                                <fa-icon [icon]="Icons[3]"></fa-icon>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row w-100 mx-0">
+                    <div class="spinner-border text-light" role="status" [hidden]="!Loading">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="card-columns" [hidden]="Loading">
+                        <a class="card border-light shadow-sm animated zoomIn cardwidth"
+                            *ngFor="let project of Projects | async">
+                            <div class="card-header text-center">
+                                {{project.Title}}
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row w-100 pt-2">
-        <div class="col-11 col-md-4 col-xl-3">
-        </div>
-        <div class="col-11 col-md-8 col-xl-9 pt-2">
-            <canvas id="Chart" class="w-100" height="400"></canvas>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Proyecto</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="javascript:;" [formGroup]="FormControl" (ngSubmit)="onSubmit()"
+                [ngClass]="{'was-validated': !FormControl.valid && Submited}">
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon [icon]="Icons[1]"></fa-icon>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Proyecto" aria-label="Title"
+                            aria-describedby="addon-wrapping" formControlName="Title" required minlength="1"
+                            maxlength="20">
+                        <div class="invalid-feedback">
+                            Ingrese Titulo Válido
+                        </div>
+                    </div>
+                    <div class="input-group pt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon [icon]="Icons[2]"></fa-icon>
+                            </span>
+                        </div>
+                        <textarea type="text" class="form-control" placeholder="Descripción" aria-label="Description"
+                            aria-describedby="addon-wrapping" formControlName="Description" required minlength="10"
+                            maxlength="120"></textarea>
+                        <div class="invalid-feedback">
+                            Ingrese Descriptción Válido
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

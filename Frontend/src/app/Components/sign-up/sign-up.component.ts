@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { User } from 'src/app/Models/user';
-import { faIdCardAlt, faKey, faUserPlus, faAt } from '@fortawesome/free-solid-svg-icons';
+import { User, UserRegistrer } from 'src/app/Models/user';
+import { faIdCardAlt, faKey, faUserPlus, faAt, faIdCard, faUserTag, faUser } from '@fortawesome/free-solid-svg-icons';
 import iziToast from 'izitoast';
+import { AuthService } from '../../Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -14,23 +16,26 @@ export class SignUpComponent implements OnInit {
   FormControl: FormGroup = new User().FormSignUp();
   Submited: Boolean = false;
   Loading: Boolean = false;
-  Icons: Array<any> = [faIdCardAlt, faKey, faUserPlus, faAt];
+  Icons: Array<any> = [faIdCardAlt, faKey, faUserPlus, faAt, faIdCard, faUserTag, faUser];
+  Roles: Array<String> = ['Estudiante', 'Docente', 'Administrativo'];
 
-  constructor() { }
+  constructor(private Auth: AuthService, private _router: Router) { }
 
   ngOnInit() {
+    if (localStorage.getItem('User')) this._router.navigate(['/profile']);
   }
 
   onSubmit() {
     this.Submited = true;
     if (this.FormControl.valid) {
       this.Loading = true;
-      setTimeout(() => {
+      this.Auth.SignUp(this.FormControl.value as UserRegistrer).then(user => {
+        localStorage.setItem('User', JSON.stringify(user));
+        this._router.navigate(['/profile']);
+      }).catch(err => {
         this.Loading = false;
-      }, 1000);
-      this.FormControl.reset();
-    } else {
-      console.log(this.FormControl.value);
+        iziToast.error({ message: 'Ha ocurrido un error vuelva a intentar' });
+      });
     }
   }
 
