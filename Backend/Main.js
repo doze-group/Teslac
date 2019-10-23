@@ -14,6 +14,8 @@ app.use(express.urlencoded({ extended: false }));
 
 require('./Routes/User.routes').UserRoutes(app);
 require('./Routes/Project.routes').ProjectRoutes(app);
+require('./Routes/Conversation.routes').ConversationRoutes(app);
+require('./Routes/Group.routes').GroupRoutes(app);
 
 //init server
 const server = app.listen(Config.Port, () => {
