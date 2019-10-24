@@ -15,6 +15,8 @@ import { UserService } from '../Services/user.service';
 import { ChatComponent } from '../Components/chat/chat.component';
 import { SocketIoModule } from 'ngx-socket-io';
 import { ChatService } from '../Services/chat.service';
+import { ProjectComponent } from '../Components/project/project.component';
+import { DragAndDropModule } from 'angular-draggable-droppable';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,7 @@ import { ChatService } from '../Services/chat.service';
     ListconversationsComponent,
     ListusersComponent,
     ChatComponent,
+    ProjectComponent
   ],
   imports: [
     CommonModule,
@@ -31,6 +34,7 @@ import { ChatService } from '../Services/chat.service';
     FontAwesomeModule,
     HttpClientModule,
     AuthModule,
+    DragAndDropModule,
     SocketIoModule.forRoot({ options: {}, url: '//localhost:3000' })
   ],
   providers: [ProjectService, GroupService, UserService, ChatService]

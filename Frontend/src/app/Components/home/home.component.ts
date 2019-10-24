@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag } from '@fortawesome/free-solid-svg-icons';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import iziToast from 'izitoast';
 import { ChatService } from 'src/app/Services/chat.service';
+import { FormGroup } from '@angular/forms';
+import { Group } from 'src/app/Models/group';
 
 @Component({
   selector: 'app-home',
@@ -13,8 +15,10 @@ import { ChatService } from 'src/app/Services/chat.service';
 export class HomeComponent implements OnInit {
 
   User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
-  Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle];
-  ArraySub: any[] = []
+  Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faUsers];
+  FormControl: FormGroup = new Group().FormGroup();
+  Submited: boolean = false;
+  ArraySub: any[] = [];
   Conversations: Subject<Array<any>> = new BehaviorSubject([]);
   Main: Subject<boolean> = new BehaviorSubject(true);
   Loading: Subject<boolean> = new BehaviorSubject(false);

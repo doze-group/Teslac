@@ -42,7 +42,8 @@
                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
                         data-parent="#accordionExample">
                         <div class="card-body px-0 pt-0 pb-0">
-                            <ListConversations [Conversations]="Conversations" [isGroup]="false" [Change]="ChangeMain"></ListConversations>
+                            <ListConversations [Conversations]="Conversations" [isGroup]="false" [Change]="ChangeMain">
+                            </ListConversations>
                         </div>
                     </div>
                 </div>
@@ -95,4 +96,57 @@
             </div>
         </ng-template>
     </main>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="Modal" tabindex="-1" role="dialog" aria-labelledby="Modal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Crear Grupo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="javascript:;" [formGroup]="FormControl" (ngSubmit)="onSubmit()"
+                [ngClass]="{'was-validated': !FormControl.valid && Submited}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="input-group pt-3 w-100">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="pass">
+                                    <fa-icon [icon]="Icons[4]"></fa-icon>
+                                </span>
+                            </div>
+                            <input type="text" class="form-control" id="Name" placeholder="Name" aria-describedby="name"
+                                required minLength="4" maxLength="30" formControlName="Name" />
+                            <div class="invalid-feedback">Nombre Invalido</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group pt-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <fa-icon [icon]="Icons[5]"></fa-icon>
+                                </span>
+                            </div>
+                            <select class="form-control" formControlName="Members" required multiple>
+                                <option *ngFor="let conversation of Conversations | async"
+                                    [ngValue]="conversation.Members[0]._id">
+                                    <img [src]="conversation.Members[0].UrlImage" class="rounded-circle float-left"
+                                        alt="Cinque Terre" width="25" height="25" />
+                                    {{conversation.Members[0].DisplayName}}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback justify-content-start">
+                                Role Es Requerido
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { faProjectDiagram, faHeading, faCommentDots, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { ProjectService } from 'src/app/Services/project.service';
 import iziToast from 'izitoast';
-import { Observable, Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { Project } from 'src/app/Models/project';
 import { FormGroup } from '@angular/forms';
+import * as JQuery from 'jquery';
 
 @Component({
   selector: 'app-profile',
@@ -36,6 +37,7 @@ export class ProfileComponent implements OnInit {
       this.ProjectService.createProject(this.User.Token, this.FormControl.value).subscribe(observer => {
         this.ArrayProject.push(observer);
         this.Projects.next(this.ArrayProject);
+        (JQuery('#exampleModal') as any).modal('hide')
       });
     }
   }

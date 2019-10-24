@@ -5,7 +5,7 @@ const { Group } = require('../Models/Group.model');
  */
 exports._Get = async (req, res) => {
     Group.find().where('Members').in([req.headers._id])
-        .populate({ path: 'Members', populate: { path: 'Members', select: '-Password -CreateAt -Description' } }).then(groups => {
+        .populate({ path: 'Members', populate: { path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' } }).then(groups => {
             return res.status(200).send(groups !== null ? groups : {});
         }).catch(err => {
             return res.status(406).send(err);
@@ -29,7 +29,8 @@ exports._Post = async (req, res) => {
 exports._Put = async (req, res) => {
     Group.findByIdAndUpdate(req.params.Id, { '$push': { 'Members': { '$each': req.body.Members } } }, { new: true })
         .where('Admin').equals(req.headers._id)
-        .populate({ path: 'Members', populate: { path: 'Members', select: '-Password -CreateAt -Description' } }).then(message => {
+        .populate({ path: 'Members', populate: 
+        { path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' } }).then(message => {
             return res.status(200).send(message !== null ? message : {});
         }).catch(err => {
             return res.status(406).send(err);

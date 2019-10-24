@@ -1,0 +1,67 @@
+<div class="row justify-content-center animated zoomIn w-100 mr-0 ml-0" style="height: 100%">
+    <div class="col">
+        <div class="row justify-content-center">
+            <div class="col-11 col-md-9 col-xl-7 align-self-center pt-2">
+                <div class="card text-center shadow">
+                    <div class="card-header gradient" style="height: 140px;"></div>
+                    <div class="card-body">
+                        <div class="row w-100 justify-content-center mr-0 ml-0">
+                            <div class="card-block card-img-profile">
+                                <img class="img-fluid" src="https://image.flaticon.com/icons/svg/1692/1692461.svg"
+                                    alt="card image">
+                            </div>
+                        </div>
+                        <h4 class="card-title">{{Project.Title}}</h4>
+                        <p class="card-text">{{Project.Description}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-2 justify-content-center">
+            <div class="col-11 align-self-center">
+                <div class="row w-100 pb-2 mx-0">
+                    <ul class="nav nav-tabs justify-content-center w-100">
+                        <li class="nav-item">
+                            <div class="nav-link active">
+                                Tableros
+                                <fa-icon [icon]="Icons[2]" class="pl-1"></fa-icon>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
+                                <fa-icon [icon]="Icons[3]"></fa-icon>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="row w-100 mx-0">
+                    <div class="card-columns">
+                        <div class="card border-light shadow-sm" *ngFor="let item of Tables | async; let index = index" mwlDroppable
+                            (drop)="DropEnd(item, index)">
+                            <div class="card-header font-weight-bold">
+                                <fa-icon [icon]="Icons[2]" class="pr-1"></fa-icon>
+                                {{item.Title}}
+                                <fa-icon [icon]="Icons[3]" class="float-right" style="cursor: pointer;"></fa-icon>
+                            </div>
+                            <div class="card-body">
+                                <div class="col" mwlDraggable (dragEnd)="this.TaskSelect = task" style="z-index: 100;"
+                                    *ngFor="let task of item.Tasks">
+                                    <a class="card border-light shadow-sm animated zoomIn cardwidth"
+                                        style="cursor: pointer;">
+                                        <div class="card-header">
+                                            <fa-icon [icon]="Icons[1]" class="pl-1"></fa-icon>
+                                            {{task.Task}}
+                                            <img class="rounded-circle float-right"
+                                                [src]="FilterAssigned(task.Assigned)" alt="card image" width="25"
+                                                height="25">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

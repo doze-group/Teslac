@@ -39,8 +39,10 @@
                     </div>
                     <div class="card-columns" [hidden]="Loading">
                         <a class="card border-light shadow-sm animated zoomIn cardwidth"
-                            *ngFor="let project of Projects | async">
+                            *ngFor="let project of Projects | async" [routerLink]="[ '/project', project._id ]"
+                            routerLinkActive="active">
                             <div class="card-header text-center">
+                                <fa-icon [icon]="Icons[0]" class="pl-1"></fa-icon>
                                 {{project.Title}}
                             </div>
                         </a>

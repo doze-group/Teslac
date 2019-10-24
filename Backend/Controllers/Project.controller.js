@@ -2,7 +2,7 @@ const { Project } = require('../Models/Project.model');
 
 exports._Get = async (req, res) => {
     Project.find().where('Members').in([req.headers._id])
-        .populate({ path: 'Members', select: '-Password -CreateAt -Description' }).then(projects => {
+        .populate({ path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' }).then(projects => {
             return res.status(200).send(projects !== null ? projects : {});
         }).catch(err => {
             return res.status(406).send(err);
@@ -11,7 +11,7 @@ exports._Get = async (req, res) => {
 
 exports._GetId = async (req, res) => {
     Project.findById(req.params.Id).where('Members').in([req.headers._id])
-        .populate({ path: 'Members', select: '-Password -CreateAt -Description' }).then(projects => {
+        .populate({ path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' }).then(projects => {
             return res.status(200).send(projects !== null ? projects : {});
         }).catch(err => {
             return res.status(406).send(err);
@@ -28,8 +28,8 @@ exports._Post = async (req, res) => {
 };
 
 exports._Put = async (req, res) => {
-    Project.findByIdAndUpdate(req.params.Id, req.body).where('Admin').equals(req.headers._id)
-        .populate({ path: 'Members', select: '-Password -CreateAt -Description' }).then(projects => {
+    Project.findByIdAndUpdate(req.params.Id, req.body)
+        .populate({ path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' }).then(projects => {
             return res.status(200).send(projects !== null ? projects : {});
         }).catch(err => {
             return res.status(406).send(err);

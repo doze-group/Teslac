@@ -8,7 +8,7 @@ const { Conversation } = require('../Models/Conversation.model');
  */
 exports._Get = async (req, res) => {
     Conversation.find().where('Members').in([req.headers._id])
-        .populate({ path: 'Members', select: '-Password' })
+        .populate({ path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' })
         .then(conversation => {
             return res.status(200).send(conversation !== null ? conversation : {});
         }).catch(err => {
@@ -21,7 +21,7 @@ exports._Get = async (req, res) => {
  */
 exports._GetOne = async (req, res) => {
     Conversation.findOne().where('Members').all([req.headers._id, req.params.Id])
-        .populate({ path: 'Members', select: '-Password' }).then(conversation => {
+        .populate({ path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' }).then(conversation => {
             return res.status(200).send(conversation !== null ? conversation : {});
         }).catch(err => {
             return res.status(406).send(err);
@@ -33,7 +33,7 @@ exports._GetOne = async (req, res) => {
  */
 exports._Post = async (req, res) => {
     new Conversation(req.body).save().then(conversation => {
-        conversation.populate({ path: 'Members', select: '-Password' }, function (err) {
+        conversation.populate({ path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' }, function (err) {
             return res.status(200).send(conversation !== null ? conversation : {});
         });
     }).catch(err => {
