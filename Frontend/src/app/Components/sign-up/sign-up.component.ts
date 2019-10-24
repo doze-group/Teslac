@@ -22,7 +22,7 @@ export class SignUpComponent implements OnInit {
   constructor(private Auth: AuthService, private _router: Router) { }
 
   ngOnInit() {
-    if (localStorage.getItem('User')) this._router.navigate(['/profile']);
+    if (localStorage.getItem('User')) this._router.navigate(['/home']);
   }
 
   onSubmit() {
@@ -31,7 +31,7 @@ export class SignUpComponent implements OnInit {
       this.Loading = true;
       this.Auth.SignUp(this.FormControl.value as UserRegistrer).then(user => {
         localStorage.setItem('User', JSON.stringify(user));
-        this._router.navigate(['/profile']);
+        this._router.navigate(['/home']);
       }).catch(err => {
         console.log(err);
         this.Loading = false;

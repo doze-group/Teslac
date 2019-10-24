@@ -3,6 +3,7 @@ import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle } from '@fortawe
 import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import iziToast from 'izitoast';
+import { ChatService } from 'src/app/Services/chat.service';
 
 @Component({
   selector: 'app-home',
@@ -19,10 +20,11 @@ export class HomeComponent implements OnInit {
   Loading: Subject<boolean> = new BehaviorSubject(false);
   Chat: Subject<any> = new BehaviorSubject({});
 
-  constructor(private ConversationService: ConversationService) { }
+  constructor(private ConversationService: ConversationService, private ChatService: ChatService) { }
 
   ngOnInit() {
     this.ConversationService.getConversations(this.User.Token).toPromise().then(conversations => {
+      this.ChatService.Connect();
       let filter = [];
       conversations.map(item => {
         item.Members = item.Members.filter(item => item._id !== this.User.User._id);
@@ -31,6 +33,7 @@ export class HomeComponent implements OnInit {
       this.ArraySub = filter;
       this.Conversations.next(filter);
       this.Loading.next(true);
+      this.ChatService.JoinRooms(conversations);
     }).catch(err => {
       iziToast.error({
         title: 'Error',

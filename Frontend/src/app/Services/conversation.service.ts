@@ -17,11 +17,11 @@ export class ConversationService {
     return this.Http.get('/api/conversation/' + Id, { headers: this.Headers(Token) });
   }
 
-  createConversation(Token: String, Conversation: any) {
+  createConversation(Token: String, Conversation: any): Observable<any> {
     return this.Http.post('/api/conversation', Conversation, { headers: this.Headers(Token) });
   }
 
-  createMessage(Token: String, Message: any, Id: String) {
+  createMessage(Token: String, Message: any, Id: String): Observable<any> {
     return this.Http.put('/api/conversation/' + Id, Message, { headers: this.Headers(Token) });
   }
 

@@ -84,7 +84,7 @@
                 <ListUsers [Conversations]="Conversations" [Change]="ChangeMain"></ListUsers>
             </div>
             <ng-template #elseTemplate>
-                <App-Chat [ChatBind]="Chat"></App-Chat>
+                <App-Chat [ChatBind]="Chat" [Change]="ChangeMain"></App-Chat>
             </ng-template>
         </div>
         <ng-template #noLoad>

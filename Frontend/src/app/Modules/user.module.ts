@@ -13,6 +13,8 @@ import { ListusersComponent } from '../Components/listusers/listusers.component'
 import { GroupService } from '../Services/group.service';
 import { UserService } from '../Services/user.service';
 import { ChatComponent } from '../Components/chat/chat.component';
+import { SocketIoModule } from 'ngx-socket-io';
+import { ChatService } from '../Services/chat.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,7 @@ import { ChatComponent } from '../Components/chat/chat.component';
     ProfileComponent,
     ListconversationsComponent,
     ListusersComponent,
-    ChatComponent
+    ChatComponent,
   ],
   imports: [
     CommonModule,
@@ -28,8 +30,9 @@ import { ChatComponent } from '../Components/chat/chat.component';
     AppRoutingModule,
     FontAwesomeModule,
     HttpClientModule,
-    AuthModule
+    AuthModule,
+    SocketIoModule.forRoot({ options: {}, url: '//localhost:3000' })
   ],
-  providers: [ProjectService, GroupService, UserService]
+  providers: [ProjectService, GroupService, UserService, ChatService]
 })
 export class UserModule { }
