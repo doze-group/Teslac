@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { faSearch, faSms } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from 'src/app/Services/user.service';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, BehaviorSubject } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import iziToast from 'izitoast';
 import { filter } from 'rxjs/operators';
@@ -14,7 +14,8 @@ import { filter } from 'rxjs/operators';
 export class ListusersComponent implements OnInit {
 
   Icons: Array<any> = [faSearch, faSms];
-  Users: Observable<Array<any>>;
+  Users: Subject<Array<any>> = new BehaviorSubject([]);
+  BackupUsers: any[] = [];
   User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
   @Input() Conversations: Subject<Array<any>>;
   @Input() Change: Function;
@@ -22,7 +23,10 @@ export class ListusersComponent implements OnInit {
   constructor(private UserService: UserService, private ConversationService: ConversationService) { }
 
   ngOnInit() {
-    this.Users = this.UserService.getUsers(this.User.Token);
+    this.UserService.getUsers(this.User.Token).toPromise().then(users => {
+      this.Users.next(users);
+      this.BackupUsers = users;
+    });
   }
 
   StartConversation(Id: String) {
@@ -44,6 +48,13 @@ export class ListusersComponent implements OnInit {
         });
       }
     }).unsubscribe();
+  }
+
+  ChangeInput(event) {
+    if (event.target.value === '')
+      this.Users.next(this.BackupUsers);
+    else
+      this.Users.next(this.BackupUsers.filter(item => item.DisplayName.includes(event.target.value.toUpperCase())))
   }
 
 }

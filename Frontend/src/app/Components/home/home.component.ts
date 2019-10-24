@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import iziToast from 'izitoast';
 import { ChatService } from 'src/app/Services/chat.service';
@@ -39,7 +39,8 @@ export class HomeComponent implements OnInit {
         title: 'Error',
         message: 'Error al encontrar tus datos intente de nuevo'
       });
-    })
+    });
+    this.HandlerMessage();
   }
 
   ChangeMain = (Chat: any = {}, Exits: boolean = false) => {
@@ -52,5 +53,28 @@ export class HomeComponent implements OnInit {
     this.Chat.next(Chat);
     this.Main.next('{}' === JSON.stringify(Chat));
   }
+
+  HandlerMessage() {
+    this.ChatService.Listener('Chat:Message').subscribe(data => {
+      this.Chat.subscribe(chat => {
+        if (JSON.stringify(chat) === '{}' || data.Room !== chat._id) {
+          iziToast.show({
+            title: data.Member.DisplayName,
+            class: 'animInsideTrue',
+            message: data.Member.Message.Message,
+            position: 'bottomCenter',
+            animateInside: false,
+            image: data.Member.UrlImage,
+            imageWidth: 70,
+            displayMode: 2,
+            layout: 2,
+            transitionIn: 'bounceInUp',
+            transitionOut: 'fadeOutUp',
+          });
+        }
+      }).unsubscribe();
+    })
+  }
+
 
 }

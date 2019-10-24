@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Subject, BehaviorSubject } from 'rxjs';
+import { Subject, BehaviorSubject, Subscribable, Subscriber, Subscription } from 'rxjs';
 import { faLocationArrow, faHandPointLeft } from '@fortawesome/free-solid-svg-icons';
 import { ChatService } from 'src/app/Services/chat.service';
 import { ConversationService } from 'src/app/Services/conversation.service';
@@ -21,6 +21,7 @@ export class ChatComponent implements OnInit {
   Icons: any[] = [faLocationArrow, faHandPointLeft];
   LoadingMessage: Subject<boolean> = new BehaviorSubject(false);
   User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
+  Suscriptions: Array<Subscription> = [];
 
   constructor(private ChatService: ChatService, private ConversationService: ConversationService) { }
 
@@ -37,77 +38,103 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ChatBind.subscribe(chat => {
-      this.isGroup = chat.UrlImage !== undefined;
-      if (chat.UrlImage === undefined) {
-        this.Chat = Object.assign({ 'UrlImage': chat.Members[0].UrlImage, 'DisplayName': chat.Members[0].DisplayName }, chat);
-      }
-      this.Messages.next(chat.Messages);
-      this.ArrayMessage = chat.Messages;
-      this.Loading.next(true);
-      setTimeout(() => {
-        for (let index = document.getElementById('scroll').scrollTop; index <= document.getElementById('scroll').scrollHeight; index++) {
-          setTimeout(() => {
-            document.getElementById('scroll').scrollTop = index;
-          }, 100);
+    this.Suscriptions.push(this.ChatBind.subscribe(chat => {
+      if (JSON.stringify(chat) !== '{}') {
+        this.isGroup = chat.UrlImage !== undefined;
+        if (chat.UrlImage === undefined) {
+          this.Chat = Object.assign({ 'UrlImage': chat.Members[0].UrlImage, 'DisplayName': chat.Members[0].DisplayName }, chat);
         }
-      }, 500);
-    });
+        this.Messages.next(chat.Messages);
+        this.ArrayMessage = chat.Messages;
+        this.Loading.next(true);
+        setTimeout(() => {
+          for (let index = document.getElementById('scroll').scrollTop; index <= document.getElementById('scroll').scrollHeight; index++) {
+            setTimeout(() => {
+              document.getElementById('scroll').scrollTop = index;
+            }, 100);
+          }
+        }, 500);
+      }
+    }));
     this.isTyping();
     this.HandlerMessage();
   }
 
+  ngOnDestroy(): void {
+    this.Suscriptions.forEach(element => {
+      element.unsubscribe();
+    });
+  }
+
   isTyping() {
-    this.ChatService.Listener('Chat:Typing').subscribe(data => {
+    this.Suscriptions.push(this.ChatService.Listener('Chat:Typing').subscribe(data => {
       document.getElementById('typing').innerHTML = data.Room ===
         this.Chat._id && data.Username !== 'is not typing' ?
         `<h6 className="animated fadeIn" style="font-size: 11px;">${this.isGroup ? data.Username : ''} Esta Escribiendo...</h6>` : '';
       document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
-    });
+    }));
   }
 
   HandlerMessage() {
-    this.ChatService.Listener('Chat:Message').subscribe(data => {
+    this.Suscriptions.push(this.ChatService.Listener('Chat:Message').subscribe(data => {
       if (data.Room === this.Chat._id) {
         this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: 'is not typing' });
         this.ArrayMessage = this.ArrayMessage.concat([data.Message]);
         this.Messages.next(this.ArrayMessage);
       }
-    })
+    }));
   }
 
   Filter(user: any) {
-    let fil = this.Chat.Members.filter(item => item._id !== user.User);
-    return fil.length >= 1 ? fil[0].DisplayName : this.User.User.DisplayName;
+    if (user.User !== this.User.User._id) {
+      let fil = this.Chat.Members.filter(item => item._id === user.User);
+      return fil.length >= 1 ? fil[0].DisplayName : 'Usuario Eliminado';
+    } else {
+      return this.User.User.DisplayName;
+    }
   }
 
   FilterBool(user: any): boolean {
-    let fil = this.Chat.Members.filter(item => item._id !== user.User);
-    return fil.length >= 1;
+    if (user.User !== this.User.User._id) {
+      let fil = this.Chat.Members.filter(item => item._id === user.User);
+      return fil.length >= 1;
+    } else {
+      return false;
+    }
   }
 
   FilterImage(user: any): boolean {
-    let fil = this.Chat.Members.filter(item => item._id !== user.User);
-    return fil.length >= 1 ? fil[0].UrlImage : this.User.User.UrlImage;
+    if (user.User !== this.User.User._id) {
+      let fil = this.Chat.Members.filter(item => item._id === user.User);
+      return fil.length >= 1 ? fil[0].UrlImage : 'Usuario Eliminado';
+    } else {
+      return this.User.User.UrlImage;
+    }
   }
 
   PushMessage() {
     this.LoadingMessage.next(true);
     this.ConversationService.createMessage(this.User.Token, {
-      'Message': document.getElementById('Message').value,
+      'Message': (document.getElementById('Message') as any).value,
       'User': this.User.User._id
     }, this.Chat._id).toPromise().then(message => {
       this.ChatService.Emit('Chat:Message', {
         'Room': this.Chat._id,
         'Message': message.Messages[message.Messages.length - 1],
-        'Member': this.User.User._id
+        'Member': {
+          'DisplayName': this.Chat.DisplayName,
+          'UrlImage': this.Chat.UrlImage,
+          'Message': this.isGroup ? this.User.User.DisplayName + ': ' + message.Messages[message.Messages.length - 1] : message.Messages[message.Messages.length - 1]
+        }
       });
       this.ArrayMessage = this.ArrayMessage.concat([message.Messages[message.Messages.length - 1]]);
       this.Messages.next(this.ArrayMessage);
       this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: 'is not typing' });
-      document.getElementById('Message').value = '';
+      (document.getElementById('Message') as any).value = '';
       this.LoadingMessage.next(false);
-      document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
+      setTimeout(() => {
+        document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
+      }, 100);
     })
   }
 

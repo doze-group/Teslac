@@ -25,17 +25,17 @@
             <div class="row animated fadeIn delay-500ms pt-1 align-items-center mx-0"
                 *ngFor="let item of Messages | async">
                 <img [src]="FilterImage(item)" class="rounded-circle px-1" alt="Profile" height="40" width="40"
-                    *ngIf="!FilterBool(item)" />
+                    *ngIf="FilterBool(item)" />
                 <div class="col">
-                    <div class="row" [ngClass]="{'justify-content-end': FilterBool(item)}">
+                    <div class="row" [ngClass]="{'justify-content-end': !FilterBool(item)}">
                         <p class="px-1 font-weight-bold my-0">{{Filter(item)}}</p>
                     </div>
-                    <div class="row" [ngClass]="{'justify-content-end': FilterBool(item)}">
+                    <div class="row" [ngClass]="{'justify-content-end': !FilterBool(item)}">
                         <p class="px-1 my-0">{{item.Message}}</p>
                     </div>
                 </div>
                 <img [src]="FilterImage(item)" class="rounded-circle px-1" alt="Profile" height="40" width="40"
-                    *ngIf="FilterBool(item)" />
+                    *ngIf="!FilterBool(item)" />
             </div>
         </div>
         <div class="card-footer">
