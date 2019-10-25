@@ -33,6 +33,10 @@ export class ProjectService {
     return this.Http.put('/api/project/' + Id + '/tables/' + IdTable + '/tasks', Task, { headers: this.Headers(Token) });
   }
 
+  deleteTask(Token: String, Id: String, IdTable: String, IdTask: String): Observable<any> {
+    return this.Http.delete('/api/project/' + Id + '/tables/' + IdTable + '/tasks/' + IdTask, { headers: this.Headers(Token) });
+  }
+
 
   Headers(Token: String): HttpHeaders {
     return new HttpHeaders({

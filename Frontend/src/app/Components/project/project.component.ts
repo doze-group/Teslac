@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import iziToast from 'izitoast';
-import { faPlus, faProjectDiagram, faTasks, faTv, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faProjectDiagram, faTasks, faTv, faUser, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-project',
@@ -18,7 +18,7 @@ export class ProjectComponent implements OnInit {
   TableSelect: any = undefined;
   Tables: Subject<Array<any>> = new BehaviorSubject([]);
   Loading: Subject<boolean> = new BehaviorSubject(true);
-  Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus, faUser];
+  Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus, faUser, faTimes, faEdit];
 
   constructor(private route: ActivatedRoute, private ProjectService: ProjectService) { }
 
@@ -103,4 +103,42 @@ export class ProjectComponent implements OnInit {
       });
     }
   }
+
+  deleteTask(task, id){
+    iziToast.question({
+      timeout: 20000,
+      close: false,
+      overlay: true,
+      id: 'question',
+      zindex: 999,
+      title: 'Hey',
+      message: '¿Esta Seguro de Elimar Esta Tarea?',
+      position: 'center',
+      buttons: [
+        ['<button><b>Si</b></button>', (instance, toast) => {
+          instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+            this.ProjectService.deleteTask(this.User.Token, this.Project._id, id, task._id).toPromise().then(project => {
+              this.Tables.subscribe(tables => {
+                tables.forEach((item, index) => {
+                  if(id === item._id){
+                    item.Tasks = project.Tables[index].Tasks;
+                    return;
+                  }
+                });
+                this.TableSelect = undefined;
+              }).unsubscribe();
+            }).catch(err => {
+              iziToast.error({
+                title: 'Error',
+                message: 'Ha ocurrido un error'
+              });
+            });
+        }, true],
+        ['<button><b>No</b></button>', function (instance, toast) {
+          instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+        }, true],
+      ],
+    });
+  }
+
 }

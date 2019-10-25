@@ -19,7 +19,6 @@ exports.SocketConfig = server => {
 
         //user typing 
         socket.on('Chat:Typing', (data) => {
-            console.log(data);
             socket.broadcast.to(data.Room).emit('Chat:Typing', data);
         });
     });

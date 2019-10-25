@@ -3,7 +3,16 @@
         <div class="row justify-content-center">
             <div class="col-11 col-md-9 col-xl-7 align-self-center pt-2">
                 <div class="card text-center shadow">
-                    <div class="card-header gradient" style="height: 140px;"></div>
+                    <div class="card-header gradient" style="height: 140px;">
+                        <div class="row justify-content-end">
+                            <button class="btn text-danger">
+                                <fa-icon [icon]="Icons[5]" size="lg"></fa-icon>
+                            </button>
+                            <button class="btn text-white">
+                                <fa-icon [icon]="Icons[6]" size="lg"></fa-icon>
+                            </button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <div class="row w-100 justify-content-center mr-0 ml-0">
                             <div class="card-block card-img-profile">
@@ -45,13 +54,18 @@
                                     <fa-icon [icon]="Icons[3]" class="float-right" style="cursor: pointer;"></fa-icon>
                                 </a>
                             </div>
-
                             <div class="card-body">
                                 <div class="col" mwlDraggable (dragEnd)="this.TaskSelect = task" style="z-index: 100;"
                                     *ngFor="let task of item.Tasks">
                                     <a class="card border-light shadow-sm animated zoomIn cardwidth"
                                         style="cursor: pointer;">
-                                        <div class="card-header gradient"></div>
+                                        <div class="card-header gradient py-0">
+                                            <div class="row justify-content-end">
+                                                <button class="btn text-danger" id="btn" (click)="deleteTask(task, item._id)">
+                                                    <fa-icon [icon]="Icons[5]"></fa-icon>
+                                                </button>
+                                            </div>
+                                        </div>
                                         <div class="card-body">
                                             <div class="row w-100 mx-0">
                                                 <div class="col-2 px-0 align-self-center">
