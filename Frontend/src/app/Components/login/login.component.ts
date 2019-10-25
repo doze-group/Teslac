@@ -5,6 +5,7 @@ import iziToast from 'izitoast';
 import { User } from 'src/app/Models/user';
 import { AuthService } from 'src/app/Services/auth.service';
 import { Router } from '@angular/router';
+import { Subject, BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   FormControl: FormGroup = new User().FormLogin();
   Submited: Boolean = false;
-  Loading: Boolean = false;
+  Loading: Subject<boolean> = new BehaviorSubject(false);
   Icons: Array<any> = [faIdCardAlt, faKey, faSignInAlt, faIdCard];
 
   constructor(private Auth: AuthService, private _router: Router) { }
@@ -24,9 +25,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    this.Submited = true;
     if (this.FormControl.valid) {
-      this.Loading = true;
+      this.Loading.next(true);
       this.Auth.Login(this.FormControl.value).then(user => {
         localStorage.setItem('User', JSON.stringify(user));
         this._router.navigate(['/home']);
@@ -36,8 +36,9 @@ export class LoginComponent implements OnInit {
           message: 'Compruebe que sus credenciales sean correctas'
         });
       });
-      this.FormControl.reset();
     }
+    this.Loading.next(false);
+    this.Submited = true;
   }
 
 }

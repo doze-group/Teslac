@@ -5,7 +5,6 @@ import iziToast from 'izitoast';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { Project } from 'src/app/Models/project';
 import { FormGroup } from '@angular/forms';
-import * as JQuery from 'jquery';
 
 @Component({
   selector: 'app-profile',
@@ -19,14 +18,12 @@ export class ProfileComponent implements OnInit {
   Loading: boolean = false;
   Submited: boolean = false;
   Projects: Subject<Array<any>> = new BehaviorSubject([]);
-  ArrayProject: Array<any>;
   User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
 
   constructor(private ProjectService: ProjectService) { }
 
   ngOnInit() {
     this.ProjectService.getProjects(this.User.Token).toPromise().then(observer => {
-      this.ArrayProject = observer;
       this.Projects.next(observer);
     });
   }
@@ -35,9 +32,9 @@ export class ProfileComponent implements OnInit {
     this.Submited = true;
     if (this.FormControl.valid) {
       this.ProjectService.createProject(this.User.Token, this.FormControl.value).subscribe(observer => {
-        this.ArrayProject.push(observer);
-        this.Projects.next(this.ArrayProject);
-        (JQuery('#exampleModal') as any).modal('hide')
+        this.Projects.subscribe(projects => {
+          projects.push(observer);
+        }).unsubscribe();
       });
     }
   }

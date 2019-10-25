@@ -41,9 +41,14 @@
                         <a class="card border-light shadow-sm animated zoomIn cardwidth"
                             *ngFor="let project of Projects | async" [routerLink]="[ '/project', project._id ]"
                             routerLinkActive="active">
-                            <div class="card-header text-center">
-                                <fa-icon [icon]="Icons[0]" class="pl-1"></fa-icon>
-                                {{project.Title}}
+                            <div class="card-header gradient"></div>
+                            <div class="card-body">
+                                <div class="row w-100 mx-0">
+                                    <div class="col px-0">
+                                        <fa-icon [icon]="Icons[0]" class="pr-1"></fa-icon>
+                                        {{project.Title}}
+                                    </div>
+                                </div>
                             </div>
                         </a>
                     </div>
@@ -73,7 +78,7 @@
                         </div>
                         <input type="text" class="form-control" placeholder="Proyecto" aria-label="Title"
                             aria-describedby="addon-wrapping" formControlName="Title" required minlength="1"
-                            maxlength="20">
+                            maxlength="20" >
                         <div class="invalid-feedback">
                             Ingrese Titulo Válido
                         </div>

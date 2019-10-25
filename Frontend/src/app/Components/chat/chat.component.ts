@@ -14,7 +14,6 @@ export class ChatComponent implements OnInit {
   @Input() ChatBind: Subject<any>;
   @Input() Change: Function;
   Messages: Subject<Array<any>> = new BehaviorSubject([]);
-  ArrayMessage: any;
   Loading: Subject<boolean> = new BehaviorSubject(false);
   Chat: any = {};
   isGroup: boolean = false;
@@ -45,7 +44,6 @@ export class ChatComponent implements OnInit {
           this.Chat = Object.assign({ 'UrlImage': chat.Members[0].UrlImage, 'DisplayName': chat.Members[0].DisplayName }, chat);
         }
         this.Messages.next(chat.Messages);
-        this.ArrayMessage = chat.Messages;
         this.Loading.next(true);
         setTimeout(() => {
           for (let index = document.getElementById('scroll').scrollTop; index <= document.getElementById('scroll').scrollHeight; index++) {
@@ -79,8 +77,9 @@ export class ChatComponent implements OnInit {
     this.Suscriptions.push(this.ChatService.Listener('Chat:Message').subscribe(data => {
       if (data.Room === this.Chat._id) {
         this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: 'is not typing' });
-        this.ArrayMessage = this.ArrayMessage.concat([data.Message]);
-        this.Messages.next(this.ArrayMessage);
+        this.Messages.subscribe(messages => {
+          messages.push(data.Message);
+        }).unsubscribe()
       }
     }));
   }
@@ -127,8 +126,9 @@ export class ChatComponent implements OnInit {
           'Message': this.isGroup ? this.User.User.DisplayName + ': ' + message.Messages[message.Messages.length - 1] : message.Messages[message.Messages.length - 1]
         }
       });
-      this.ArrayMessage = this.ArrayMessage.concat([message.Messages[message.Messages.length - 1]]);
-      this.Messages.next(this.ArrayMessage);
+      this.Messages.subscribe(messages => {
+        messages.push(message.Messages[message.Messages.length - 1]);
+      }).unsubscribe();
       this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: 'is not typing' });
       (document.getElementById('Message') as any).value = '';
       this.LoadingMessage.next(false);

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import iziToast from 'izitoast';
-import { faPlus, faProjectDiagram, faTasks, faTv } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faProjectDiagram, faTasks, faTv, faUser } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-project',
@@ -14,10 +14,11 @@ export class ProjectComponent implements OnInit {
 
   User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
   Project: any = {};
-  TaskSelect: any = {};
+  TaskSelect: any = undefined;
+  TableSelect: any = undefined;
   Tables: Subject<Array<any>> = new BehaviorSubject([]);
   Loading: Subject<boolean> = new BehaviorSubject(true);
-  Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus];
+  Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus, faUser];
 
   constructor(private route: ActivatedRoute, private ProjectService: ProjectService) { }
 
@@ -38,7 +39,7 @@ export class ProjectComponent implements OnInit {
 
   FilterAssigned(As: String) {
     let fil = this.Project.Members.filter(item => item._id === As);
-    return fil.length >= 1 ? fil[0].UrlImage : 'https://image.flaticon.com/icons/svg/1692/1692461.svg';
+    return fil.length >= 1 ? fil[0].UrlImage : 'https://image.flaticon.com/icons/svg/660/660611.svg';
   }
 
   DropEnd(Table, index) {
@@ -61,4 +62,45 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+  createTable() {
+    if ((document.getElementById('TitleTable') as any).value !== undefined && (document.getElementById('TitleTable') as any).value !== '') {
+      this.ProjectService.createTable(this.User.Token, { 'Title': (document.getElementById('TitleTable') as any).value }, this.Project._id).toPromise().then(project => {
+        this.Project = project;
+        this.Tables.subscribe(tables =>{ 
+          tables.push(project.Tables[tables.length]);
+        }).unsubscribe();
+        (document.getElementById('TitleTable') as any).value = '';
+      }).catch(err => {
+        iziToast.error({
+          title: 'Error',
+          message: 'Ha ocurrido un error'
+        });
+      });
+    }
+  }
+
+  createTask(){
+    if(this.TableSelect !== undefined && (document.getElementById('TitleTask') as any).value !== '' && (document.getElementById('Assigned') as any).value !== ''){
+      this.ProjectService.createTask(this.User.Token, {
+        'Task': (document.getElementById('TitleTask') as any).value,
+        'Assigned': (document.getElementById('Assigned') as any).value
+      }, this.Project._id, this.TableSelect._id).toPromise().then(project => {
+        this.Tables.subscribe(tables => {
+          tables.forEach((item, index) => {
+            if(this.TableSelect._id === item._id){
+              item.Tasks = project.Tables[index].Tasks;
+              return;
+            }
+          });
+          this.TableSelect = undefined;
+        }).unsubscribe();
+        (document.getElementById('TitleTask') as any).value = '';
+      }).catch(err => {
+        iziToast.error({
+          title: 'Error',
+          message: 'Ha ocurrido un error'
+        });
+      });
+    }
+  }
 }

@@ -80,5 +80,27 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  LogOut() {
+    iziToast.question({
+      timeout: 20000,
+      close: false,
+      overlay: true,
+      id: 'question',
+      zindex: 999,
+      title: 'Hey',
+      message: '¿Esta Seguro de Salir?',
+      position: 'center',
+      buttons: [
+        ['<button><b>Si</b></button>', function (instance, toast) {
+          instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+          localStorage.clear();
+          window.location.reload();
+        }, true],
+        ['<button><b>No</b></button>', function (instance, toast) {
+          instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+        }, true],
+      ],
+    });
+  }
 
 }

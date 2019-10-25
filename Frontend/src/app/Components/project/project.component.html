@@ -28,32 +28,44 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
+                            <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#table">
                                 <fa-icon [icon]="Icons[3]"></fa-icon>
                             </a>
                         </li>
                     </ul>
                 </div>
-                <div class="row w-100 mx-0">
+                <div class="row w-100 mx-0 justify-content-center">
                     <div class="card-columns">
-                        <div class="card border-light shadow-sm" *ngFor="let item of Tables | async; let index = index" mwlDroppable
-                            (drop)="DropEnd(item, index)">
+                        <div class="card border-light shadow-sm" *ngFor="let item of Tables | async; let index = index"
+                            mwlDroppable (drop)="DropEnd(item, index)">
                             <div class="card-header font-weight-bold">
                                 <fa-icon [icon]="Icons[2]" class="pr-1"></fa-icon>
                                 {{item.Title}}
-                                <fa-icon [icon]="Icons[3]" class="float-right" style="cursor: pointer;"></fa-icon>
+                                <a (click)="this.TableSelect = item" data-toggle="modal" data-target="#task">
+                                    <fa-icon [icon]="Icons[3]" class="float-right" style="cursor: pointer;"></fa-icon>
+                                </a>
                             </div>
+
                             <div class="card-body">
                                 <div class="col" mwlDraggable (dragEnd)="this.TaskSelect = task" style="z-index: 100;"
                                     *ngFor="let task of item.Tasks">
                                     <a class="card border-light shadow-sm animated zoomIn cardwidth"
                                         style="cursor: pointer;">
-                                        <div class="card-header">
-                                            <fa-icon [icon]="Icons[1]" class="pl-1"></fa-icon>
-                                            {{task.Task}}
-                                            <img class="rounded-circle float-right"
-                                                [src]="FilterAssigned(task.Assigned)" alt="card image" width="25"
-                                                height="25">
+                                        <div class="card-header gradient"></div>
+                                        <div class="card-body">
+                                            <div class="row w-100 mx-0">
+                                                <div class="col-2 px-0 align-self-center">
+                                                    <fa-icon [icon]="Icons[1]" class="float-left"></fa-icon>
+                                                </div>
+                                                <div class="col px-0 align-self-center">
+                                                    {{task.Task}}
+                                                </div>
+                                                <div class="col-2 px-0 align-self-center">
+                                                    <img class="rounded-circle float-right"
+                                                        [src]="FilterAssigned(task.Assigned)" alt="card image"
+                                                        width="25" height="25">
+                                                </div>
+                                            </div>
                                         </div>
                                     </a>
                                 </div>
@@ -61,6 +73,83 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Table -->
+<div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="table" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Tablero</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="Icons[1]"></fa-icon>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Tablero Titulo" aria-label="Title"
+                        aria-describedby="addon-wrapping" required minlength="1" maxlength="20" id="TitleTable">
+                    <div class="invalid-feedback">
+                        Ingrese Titulo Válido
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="createTable()" data-dismiss="modal"
+                    aria-label="Close">Crear</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal task -->
+<div class="modal fade" id="task" tabindex="-1" role="dialog" aria-labelledby="table" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Tarea
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="Icons[1]"></fa-icon>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Tarea a Realizar" aria-label="Title"
+                        aria-describedby="addon-wrapping" required minlength="1" maxlength="20" id="TitleTask">
+                    <div class="invalid-feedback">
+                        Ingrese Terea Válido
+                    </div>
+                </div>
+                <div class="input-group pt-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <fa-icon [icon]="Icons[4]"></fa-icon>
+                        </span>
+                    </div>
+                    <select class="form-control" required id="Assigned">
+                        <option *ngFor="let member of Project.Members" [value]="member._id">{{member.DisplayName}}
+                        </option>
+                    </select>
+                    <div class="invalid-feedback justify-content-start">
+                        Usuario Requerido
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" (click)="createTask()" data-dismiss="modal"
+                    aria-label="Close">Crear</button>
             </div>
         </div>
     </div>

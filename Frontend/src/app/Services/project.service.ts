@@ -25,6 +25,15 @@ export class ProjectService {
     return this.Http.put('/api/project/' + Id, Project, { headers: this.Headers(Token) });
   }
 
+  createTable(Token: String, Table: any, Id: String): Observable<any> {
+    return this.Http.put('/api/project/' + Id + '/tables', Table, { headers: this.Headers(Token) });
+  }
+
+  createTask(Token: String, Task: any, Id: String, IdTable: String): Observable<any> {
+    return this.Http.put('/api/project/' + Id + '/tables/' + IdTable + '/tasks', Task, { headers: this.Headers(Token) });
+  }
+
+
   Headers(Token: String): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',
