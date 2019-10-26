@@ -46,11 +46,7 @@ export class ChatComponent implements OnInit {
         this.Messages.next(chat.Messages);
         this.Loading.next(true);
         setTimeout(() => {
-          for (let index = document.getElementById('scroll').scrollTop; index <= document.getElementById('scroll').scrollHeight; index++) {
-            setTimeout(() => {
-              document.getElementById('scroll').scrollTop = index;
-            }, 100);
-          }
+          document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
         }, 500);
       }
     }));

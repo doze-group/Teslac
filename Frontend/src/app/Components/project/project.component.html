@@ -44,9 +44,9 @@
                     </ul>
                 </div>
                 <div class="row w-100 mx-0 justify-content-center">
-                    <div class="card-columns">
-                        <div class="card border-light shadow-sm" *ngFor="let item of Tables | async; let index = index"
-                            mwlDroppable (drop)="DropEnd(item, index)">
+                    <div class="col-11 col-sm-9 col-md-3" *ngFor="let item of Tables | async; let index = index"
+                        mwlDroppable (drop)="DropEnd(item, index)">
+                        <div class="card border-light shadow-sm">
                             <div class="card-header font-weight-bold">
                                 <fa-icon [icon]="Icons[2]" class="pr-1"></fa-icon>
                                 {{item.Title}}
@@ -55,13 +55,14 @@
                                 </a>
                             </div>
                             <div class="card-body">
-                                <div class="col" mwlDraggable (dragEnd)="this.TaskSelect = task" style="z-index: 100;"
-                                    *ngFor="let task of item.Tasks">
+                                <div class="col pt-2" mwlDraggable (dragEnd)="this.TaskSelect = task"
+                                    style="z-index: 100;" *ngFor="let task of item.Tasks">
                                     <a class="card border-light shadow-sm animated zoomIn cardwidth"
                                         style="cursor: pointer;">
                                         <div class="card-header gradient py-0">
                                             <div class="row justify-content-end">
-                                                <button class="btn text-danger" id="btn" (click)="deleteTask(task, item._id)">
+                                                <button class="btn text-danger" id="btn"
+                                                    (click)="deleteTask(task, item._id)">
                                                     <fa-icon [icon]="Icons[5]"></fa-icon>
                                                 </button>
                                             </div>
