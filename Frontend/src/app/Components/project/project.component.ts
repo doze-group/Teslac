@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import iziToast from 'izitoast';
-import { faPlus, faProjectDiagram, faTasks, faTv, faUser, faTimes, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faProjectDiagram, faTasks, faTv, faUser, faTimes, faEdit, faEye, faCogs } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-project',
@@ -18,7 +18,7 @@ export class ProjectComponent implements OnInit {
   TableSelect: any = undefined;
   Tables: Subject<Array<any>> = new BehaviorSubject([]);
   Loading: Subject<boolean> = new BehaviorSubject(true);
-  Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus, faUser, faTimes, faEdit];
+  Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus, faUser, faTimes, faCogs, faEye];
 
   constructor(private route: ActivatedRoute, private ProjectService: ProjectService) { }
 
