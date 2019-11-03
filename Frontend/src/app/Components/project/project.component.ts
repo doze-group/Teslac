@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from 'src/app/Services/project.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import iziToast from 'izitoast';
@@ -20,14 +20,18 @@ export class ProjectComponent implements OnInit {
   Loading: Subject<boolean> = new BehaviorSubject(true);
   Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus, faUser, faTimes, faCogs, faEye];
 
-  constructor(private route: ActivatedRoute, private ProjectService: ProjectService) { }
+  constructor(private route: ActivatedRoute, private ProjectService: ProjectService, private routing: Router) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.ProjectService.getProjectId(this.User.Token, params.get('id')).toPromise().then(project => {
-        this.Loading.next(false);
-        this.Project = project;
-        this.Tables.next(project.Tables);
+        if(JSON.stringify(project) === '{}'){
+          this.routing.navigate(['/home']);
+        }else{
+          this.Loading.next(false);
+          this.Project = project;
+          this.Tables.next(project.Tables);
+        }
       }).catch(err => {
         iziToast.error({
           title: 'Error',
@@ -66,7 +70,7 @@ export class ProjectComponent implements OnInit {
     if ((document.getElementById('TitleTable') as any).value !== undefined && (document.getElementById('TitleTable') as any).value !== '') {
       this.ProjectService.createTable(this.User.Token, { 'Title': (document.getElementById('TitleTable') as any).value }, this.Project._id).toPromise().then(project => {
         this.Project = project;
-        this.Tables.subscribe(tables =>{ 
+        this.Tables.subscribe(tables => {
           tables.push(project.Tables[tables.length]);
         }).unsubscribe();
         (document.getElementById('TitleTable') as any).value = '';
@@ -79,15 +83,15 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  createTask(){
-    if(this.TableSelect !== undefined && (document.getElementById('TitleTask') as any).value !== '' && (document.getElementById('Assigned') as any).value !== ''){
+  createTask() {
+    if (this.TableSelect !== undefined && (document.getElementById('TitleTask') as any).value !== '' && (document.getElementById('Assigned') as any).value !== '') {
       this.ProjectService.createTask(this.User.Token, {
         'Task': (document.getElementById('TitleTask') as any).value,
         'Assigned': (document.getElementById('Assigned') as any).value
       }, this.Project._id, this.TableSelect._id).toPromise().then(project => {
         this.Tables.subscribe(tables => {
           tables.forEach((item, index) => {
-            if(this.TableSelect._id === item._id){
+            if (this.TableSelect._id === item._id) {
               item.Tasks = project.Tables[index].Tasks;
               return;
             }
@@ -104,7 +108,62 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  deleteTask(task, id){
+  deleteTask(task, id) {
+    this.questionToast('¿Seguro de eliminar esta tarea?', () => {
+      this.ProjectService.deleteTask(this.User.Token, this.Project._id, id, task._id).toPromise().then(project => {
+        this.Tables.subscribe(tables => {
+          tables.forEach((item, index) => {
+            if (id === item._id) {
+              item.Tasks = project.Tables[index].Tasks;
+              return;
+            }
+          });
+          this.TableSelect = undefined;
+        }).unsubscribe();
+      }).catch(err => {
+        iziToast.error({
+          title: 'Error',
+          message: 'Ha ocurrido un error'
+        });
+      });
+    })
+  }
+
+  deleteTable(id) {
+    this.questionToast('¿Seguro de eliminar este tablero?', () => {
+      this.ProjectService.deleteTable(this.User.Token, this.Project._id, id).toPromise().then(project => {
+        this.Tables.subscribe(tables => {
+          tables.forEach((item, index) => {
+            if (id === item._id) {
+              tables.splice(index, 1);
+              return;
+            }
+          });
+          this.TableSelect = undefined;
+        }).unsubscribe();
+      }).catch(err => {
+        iziToast.error({
+          title: 'Error',
+          message: 'Ha ocurrido un error'
+        });
+      });
+    });
+  }
+
+  deleteProject(){
+    this.questionToast('¿Seguro de eliminar este projecto?', () => {
+      this.ProjectService.deleteProject(this.User.Token, this.Project._id).toPromise().then(project => {
+        this.routing.navigate(['/home']);
+      }).catch(err => {
+        iziToast.error({
+          title: 'Error',
+          message: 'Ha ocurrido un error'
+        });
+      });
+    });
+  }
+
+  questionToast(Msg: string, Ok: Function) {
     iziToast.question({
       timeout: 20000,
       close: false,
@@ -112,27 +171,12 @@ export class ProjectComponent implements OnInit {
       id: 'question',
       zindex: 999,
       title: 'Hey',
-      message: '¿Esta Seguro de Elimar Esta Tarea?',
+      message: Msg,
       position: 'center',
       buttons: [
         ['<button><b>Si</b></button>', (instance, toast) => {
           instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
-            this.ProjectService.deleteTask(this.User.Token, this.Project._id, id, task._id).toPromise().then(project => {
-              this.Tables.subscribe(tables => {
-                tables.forEach((item, index) => {
-                  if(id === item._id){
-                    item.Tasks = project.Tables[index].Tasks;
-                    return;
-                  }
-                });
-                this.TableSelect = undefined;
-              }).unsubscribe();
-            }).catch(err => {
-              iziToast.error({
-                title: 'Error',
-                message: 'Ha ocurrido un error'
-              });
-            });
+          Ok();
         }, true],
         ['<button><b>No</b></button>', function (instance, toast) {
           instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');

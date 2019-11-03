@@ -25,6 +25,10 @@ export class ProjectService {
     return this.Http.put('/api/project/' + Id, Project, { headers: this.Headers(Token) });
   }
 
+  deleteProject(Token: String, Id: String): Observable<any> {
+    return this.Http.delete('/api/project/' + Id, { headers: this.Headers(Token) });
+  }
+
   createTable(Token: String, Table: any, Id: String): Observable<any> {
     return this.Http.put('/api/project/' + Id + '/tables', Table, { headers: this.Headers(Token) });
   }
@@ -37,6 +41,9 @@ export class ProjectService {
     return this.Http.delete('/api/project/' + Id + '/tables/' + IdTable + '/tasks/' + IdTask, { headers: this.Headers(Token) });
   }
 
+  deleteTable(Token: String, Id: String, IdTable: String): Observable<any> {
+    return this.Http.delete('/api/project/' + Id + '/tables/' + IdTable, { headers: this.Headers(Token) });
+  }
 
   Headers(Token: String): HttpHeaders {
     return new HttpHeaders({

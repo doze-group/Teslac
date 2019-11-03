@@ -1,39 +1,36 @@
 <div class="row mx-0" style="height: 100%">
-    <nav class="col-md-3 col-xl-2 d-none d-md-block gradient">
-        <a class="row pt-3 justify.content-center mx-0" style="cursor: pointer;" [routerLink]="['/profile']"
-            routerLinkActive="active">
-            <div class="col-6 col-md-5 col-lg-4 col-xl-5 align-self-center pl-1">
+    <nav class="col-md-3 col-xl-2 d-none d-md-block bg-transparent border-right">
+        <div class="row pt-3 justify.content-center mx-0 text-dark border-bottom">
+            <div class="col-4 col-md-5 col-lg-4 col-xl-5 align-self-center">
                 <img [src]="this.User.User.UrlImage" class="rounded-circle img-fluid float-left"
                     style="height: 80px; width: 80px;">
             </div>
-            <div class="col pl-1 align-self-center">
-                <div class="row">
-                    <h6 class="text-center font-weight-bold text-white">
-                        {{User.User.DisplayName}}
-                    </h6>
-                </div>
+            <div class="col align-self-center">
+                <a [routerLink]="[ '/profile' ]" routerLinkActive="active" class="rounded-circle float-right">
+                    <fa-icon [icon]="Icons[6]" size="lg"></fa-icon>
+                </a>
             </div>
-        </a>
-        <div class="row w-100 justify-content-between mx-0 pt-3">
-            <button type="button" class="btn btn-link text-white" (click)="ChangeMain()">
+        </div>
+        <div class="row w-100 justify-content-between mx-0 py-1 border-bottom">
+            <button type="button" class="btn btn-link text-dark" (click)="ChangeMain()">
                 <fa-icon [icon]="Icons[0]" size="lg"></fa-icon>
             </button>
-            <button type="button" class="btn btn-link text-white" (click)="LogOut()">
+            <button type="button" class="btn btn-link text-dark" (click)="LogOut()">
                 <fa-icon [icon]="Icons[1]" size="lg"></fa-icon>
             </button>
         </div>
-        <div class="row pt-3 justify-content-center">
+        <div class="row pt-1 justify-content-center">
             <div class="accordion w-100" id="accordionExample">
                 <div class="card bg-transparent w-100">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                            <button class="btn text-white w-100" type="button" data-toggle="collapse"
+                            <button class="btn text-dark w-100" type="button" data-toggle="collapse"
                                 data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"
                                 id="collapse">
-                                <h6 class="text-center font-weight-bold text-white float-left">
+                                <h6 class="text-center font-weight-bold text-dark float-left">
                                     Mensajes
                                 </h6>
-                                <span class="float-right text-white">
+                                <span class="float-right text-dark">
                                     <fa-icon [icon]="Icons[2]"></fa-icon>
                                 </span>
                             </button>
@@ -51,19 +48,19 @@
                     <div class="card-header" id="headingTwo">
                         <h2 class="mb-0">
                             <div class="row w-100 mx-0 justify-content-between">
-                                <button class="btn text-white w-75" type="button" data-toggle="collapse"
+                                <button class="btn text-dark w-75" type="button" data-toggle="collapse"
                                     data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"
                                     id="collapse">
-                                    <h6 class="text-center font-weight-bold text-white float-left">
+                                    <h6 class="text-center font-weight-bold text-dark float-left">
                                         Grupos
                                     </h6>
-                                    <span class="float-right text-white">
+                                    <span class="float-right text-dark">
                                         <fa-icon [icon]="Icons[2]"></fa-icon>
                                     </span>
                                 </button>
-                                <button class="btn text-white w-25" type="button" data-toggle="modal"
+                                <button class="btn text-dark w-25" type="button" data-toggle="modal"
                                     data-target="#Modal">
-                                    <span class="float-right text-white">
+                                    <span class="float-right text-dark">
                                         <fa-icon [icon]="Icons[3]"></fa-icon>
                                     </span>
                                 </button>

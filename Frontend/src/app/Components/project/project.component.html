@@ -4,8 +4,8 @@
             <div class="col-11 col-md-9 col-xl-7 align-self-center pt-2">
                 <div class="card text-center shadow">
                     <div class="card-header gradient" style="height: 140px;">
-                        <div class="row justify-content-end">
-                            <button class="btn text-danger">
+                        <div class="row justify-content-end" *ngIf="this.Project.Admin === this.User.User._id">
+                            <button class="btn text-danger" (click)="this.deleteProject()">
                                 <fa-icon [icon]="Icons[5]" size="lg"></fa-icon>
                             </button>
                             <button class="btn text-white">
@@ -17,7 +17,7 @@
                         <div class="row w-100 justify-content-center mr-0 ml-0">
                             <div class="card-block card-img-profile">
                                 <img class="img-fluid" src="https://image.flaticon.com/icons/svg/1692/1692461.svg"
-                                    alt="card image">
+                                    alt="card image" alt="Imagen proyecto">
                             </div>
                         </div>
                         <h4 class="card-title">{{Project.Title}}</h4>
@@ -51,7 +51,7 @@
                             <div class="card-header font-weight-bold">
                                 <fa-icon [icon]="Icons[2]" class="pr-1"></fa-icon>
                                 {{item.Title}}
-                                <a class="text-danger float-right pl-3" style="cursor: pointer;">
+                                <a class="text-danger float-right pl-3" style="cursor: pointer;" (click)="deleteTable(item._id)">
                                     <fa-icon [icon]="Icons[5]"></fa-icon>
                                 </a>
                                 <a (click)="this.TableSelect = item" data-toggle="modal" data-target="#task">

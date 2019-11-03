@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import iziToast from 'izitoast';
@@ -15,7 +15,7 @@ import { Group } from 'src/app/Models/group';
 export class HomeComponent implements OnInit {
 
   User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
-  Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faUsers];
+  Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faUsers, faEdit];
   FormControl: FormGroup = new Group().FormGroup();
   Submited: boolean = false;
   ArraySub: any[] = [];
@@ -61,7 +61,7 @@ export class HomeComponent implements OnInit {
   HandlerMessage() {
     this.ChatService.Listener('Chat:Message').subscribe(data => {
       this.Chat.subscribe(chat => {
-        if (JSON.stringify(chat) === '{}' || data.Room !== chat._id) {
+        if (JSON.stringify(chat) === '{}' && data.Room !== chat._id) {
           iziToast.show({
             title: data.Member.DisplayName,
             class: 'animInsideTrue',
