@@ -3,7 +3,8 @@
         <div class="row pt-3 justify.content-center mx-0 text-dark border-bottom">
             <div class="col-4 col-md-5 col-lg-4 col-xl-5 align-self-center">
                 <img [src]="this.User.User.UrlImage" class="rounded-circle img-fluid float-left"
-                    style="height: 80px; width: 80px;">
+                    style="height: 80px; width: 80px;" onerror="this.src = '../../assets/Images/errorImage.svg'"
+                    alt="Imagen">
             </div>
             <div class="col align-self-center">
                 <a [routerLink]="[ '/profile' ]" routerLinkActive="active" class="rounded-circle float-right">
@@ -130,7 +131,8 @@
                                 <option *ngFor="let conversation of Conversations | async"
                                     [ngValue]="conversation.Members[0]._id">
                                     <img [src]="conversation.Members[0].UrlImage" class="rounded-circle float-left"
-                                        alt="Cinque Terre" width="25" height="25" />
+                                        alt="Cinque Terre" width="25" height="25"
+                                        onerror="this.src = '../../assets/Images/errorImage.svg'" alt="Imagen" />
                                     {{conversation.Members[0].DisplayName}}
                                 </option>
                             </select>

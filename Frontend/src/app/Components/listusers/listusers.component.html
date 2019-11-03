@@ -1,10 +1,10 @@
-<div class="card bg-transparent chat" >
+<div class="card bg-transparent chat">
     <div class="card-header">
         <div class="row">
             <div class="col">
                 <div class="input-group w-100">
                     <input class="form-control py-2 border-right-0 border bg-transparent" id="search" type="search"
-                        placeholder="Buscar por nombre" (input)="ChangeInput($event)"/>
+                        placeholder="Buscar por nombre" (input)="ChangeInput($event)" />
                     <span class="input-group-append">
                         <button class="btn btn-link border-left-0 border">
                             <fa-icon [icon]="Icons[0]"></fa-icon>
@@ -16,7 +16,8 @@
     </div>
     <div class="card-body border-shadow overflow-auto">
         <div class="row justify-content-start">
-            <div class="col col-md-6 col-lg-5 col-xl-4 pb-2 align-self-center animated zoomIn" *ngFor="let user of Users | async">
+            <div class="col col-md-6 col-lg-5 col-xl-4 pb-2 align-self-center animated zoomIn"
+                *ngFor="let user of Users | async">
                 <div class="card bg-transparent mr-0 px-0">
                     <div class="card-header">
                         <div class="row">
@@ -30,10 +31,12 @@
                         </div>
                     </div>
                     <div class="card-body align-self-center">
-                        <img [src]="user.UrlImage" class="rounded" alt="Profile" width="200" height="200" />
+                        <img [src]="user.UrlImage" class="rounded" alt="Profile" width="200" height="200" alt="Imagen"
+                            onerror="this.src = '../../assets/Images/errorImage.svg'" />
                     </div>
                     <div class="card-footer">
-                        <button type="button" class="btn btn-primary w-100 gradient" (click)="StartConversation(user._id)">
+                        <button type="button" class="btn btn-primary w-100 gradient"
+                            (click)="StartConversation(user._id)">
                             <p class="text-center font-weight-bold text-white mb-0">
                                 <span class="pr-1">
                                     <fa-icon [icon]="Icons[1]" size="lg"></fa-icon>

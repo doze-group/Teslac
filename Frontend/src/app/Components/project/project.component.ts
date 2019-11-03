@@ -25,9 +25,9 @@ export class ProjectComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       this.ProjectService.getProjectId(this.User.Token, params.get('id')).toPromise().then(project => {
-        if(JSON.stringify(project) === '{}'){
+        if (JSON.stringify(project) === '{}') {
           this.routing.navigate(['/home']);
-        }else{
+        } else {
           this.Loading.next(false);
           this.Project = project;
           this.Tables.next(project.Tables);
@@ -150,7 +150,7 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-  deleteProject(){
+  deleteProject() {
     this.questionToast('¿Seguro de eliminar este projecto?', () => {
       this.ProjectService.deleteProject(this.User.Token, this.Project._id).toPromise().then(project => {
         this.routing.navigate(['/home']);

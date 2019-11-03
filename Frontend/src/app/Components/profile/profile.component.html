@@ -7,7 +7,8 @@
                     <div class="card-body">
                         <div class="row w-100 justify-content-center mr-0 ml-0">
                             <div class="card-block card-img-profile">
-                                <img class="img-fluid" [src]="User.User.UrlImage" alt="card image">
+                                <img class="img-fluid" [src]="User.User.UrlImage" alt="card image" alt="Imagen"
+                                    onerror="this.src = '../../assets/Images/errorImage.svg'">
                             </div>
                         </div>
                         <h4 class="card-title">{{User.User.DisplayName}}</h4>
