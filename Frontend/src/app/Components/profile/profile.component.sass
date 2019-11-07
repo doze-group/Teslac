@@ -5,3 +5,41 @@
   border: 5px solid white
   height: 140px
   width: 140px
+
+.hovereffect
+  width: 100%
+  height: 100%
+  float: left
+  overflow: hidden
+  position: relative
+  text-align: center
+  cursor: default
+
+  & .overlay
+    width: 100%
+    height: 100%
+    position: absolute
+    overflow: hidden
+    top: 0
+    left: 0
+    opacity: 0
+    background-color: rgba(0, 0, 0, 0.5)
+    -webkit-transition: all .4s ease-in-out
+    transition: all .4s ease-in-out
+
+  & img
+    width: 100%
+    height: 100%
+    display: block
+    position: relative
+    -webkit-transition: all .4s linear
+    transition: all .4s linear
+
+  &:hover img
+    -ms-transform: scale(1.2)
+    -webkit-transform: scale(1.2)
+    transform: scale(1.2)
+
+  &:hover .overlay
+    opacity: 1
+    filter: alpha(opacity=100)

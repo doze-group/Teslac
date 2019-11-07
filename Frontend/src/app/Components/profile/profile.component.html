@@ -7,12 +7,22 @@
                     <div class="card-body">
                         <div class="row w-100 justify-content-center mr-0 ml-0">
                             <div class="card-block card-img-profile">
-                                <img class="img-fluid" [src]="User.User.UrlImage" alt="card image" alt="Imagen"
-                                    onerror="this.src = '../../assets/Images/errorImage.svg'">
+                                <div class="hovereffect rounded-circle">
+                                    <img class="img-fluid" [src]="(User | async).User.UrlImage" alt="card image" alt="Imagen"
+                                        onerror="this.src = '../../assets/Images/errorImage.svg'">
+                                    <div class="overlay rounded-circle text-white">
+                                        <input type="file" name="imageUpload" id="imageUpload"
+                                            style="visibility: hidden;"
+                                            accept="image/x-png,image/gif,image/jpeg" (input)="UploadImage($event)"/>
+                                        <label for="imageUpload" style="cursor: pointer;">
+                                            <fa-icon [icon]="Icons[4]" size="lg"></fa-icon>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <h4 class="card-title">{{User.User.DisplayName}}</h4>
-                        <p class="card-text">{{User.User.Description}}</p>
+                        <h4 class="card-title">{{(User | async).User.DisplayName}}</h4>
+                        <p class="card-text">{{(User | async).User.Description}}</p>
                     </div>
                 </div>
             </div>

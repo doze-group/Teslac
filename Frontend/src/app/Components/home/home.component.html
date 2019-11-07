@@ -1,12 +1,12 @@
 <div class="row mx-0" style="height: 100%">
     <nav class="col-md-3 col-xl-2 d-none d-md-block bg-transparent border-right">
         <div class="row pt-3 justify.content-center mx-0 text-dark border-bottom">
-            <div class="col-4 col-md-5 col-lg-4 col-xl-5 align-self-center">
-                <img [src]="this.User.User.UrlImage" class="rounded-circle img-fluid float-left"
-                    style="height: 80px; width: 80px;" onerror="this.src = '../../assets/Images/errorImage.svg'"
+            <div class="col align-self-center">
+                <img [src]="this.User.User.UrlImage" class="rounded-circle img-fluid float-left pb-1"
+                    style="height: 60px; width: 60px;" onerror="this.src = '../../assets/Images/errorImage.svg'"
                     alt="Imagen">
             </div>
-            <div class="col align-self-center">
+            <div class="col align-self-center pb-1">
                 <a [routerLink]="[ '/profile' ]" routerLinkActive="active" class="rounded-circle float-right">
                     <fa-icon [icon]="Icons[6]" size="lg"></fa-icon>
                 </a>

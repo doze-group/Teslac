@@ -27,6 +27,7 @@ export class HomeComponent implements OnInit {
   constructor(private ConversationService: ConversationService, private ChatService: ChatService) { }
 
   ngOnInit() {
+    console.log(this.User.User);
     this.ConversationService.getConversations(this.User.Token).toPromise().then(conversations => {
       this.ChatService.Connect();
       let filter = [];
