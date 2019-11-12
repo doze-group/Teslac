@@ -1,11 +1,23 @@
 <ul class="list-group w-100 bg-transparent">
-    <button *ngFor="let item of Conversations | async"
-        class="list-group-item bg-transparent d-flex justify-content-start align-items-center pr-1 pl-1 border-bottom"
-        (click)="StartConversation(item.Members[0]._id)">
-        {{item.UrlImage}}
-        <img [src]="item.Members[0].UrlImage" width="30" height="30" alt="Imagen"
-            onerror="this.src = '../../assets/Images/errorImage.svg'">
-        <p class="text-center font-weight-bold text-dark mb-0 ml-1" style="font-size: 11px;">
-            {{item.Members[0].DisplayName}}</p>
-    </button>
+    <ng-container *ngIf="isGroup; else elseTemplate">
+        <button *ngFor="let item of Conversations | async"
+            class="list-group-item bg-transparent d-flex justify-content-start align-items-center pr-1 pl-1 border-bottom"
+            (click)="StartConversationGroup(item._id)">
+            <img [src]="item.UrlImage" width="30" height="30" alt="Imagen"
+                onerror="this.src = '../../assets/Images/errorImage.svg'">
+            <p class="text-center font-weight-bold text-dark mb-0 ml-1" style="font-size: 11px;">
+                {{item.DisplayName}}</p>
+        </button>
+    </ng-container>
+    <ng-template #elseTemplate>
+        <button *ngFor="let item of Conversations | async"
+            class="list-group-item bg-transparent d-flex justify-content-start align-items-center pr-1 pl-1 border-bottom"
+            (click)="StartConversation(item.Members[0]._id)">
+            <img [src]="item.Members[0].UrlImage" width="30" height="30" alt="Imagen"
+                onerror="this.src = '../../assets/Images/errorImage.svg'">
+            <p class="text-center font-weight-bold text-dark mb-0 ml-1" style="font-size: 11px;">
+                {{item.Members[0].DisplayName}}</p>
+        </button>
+    </ng-template>
+
 </ul>

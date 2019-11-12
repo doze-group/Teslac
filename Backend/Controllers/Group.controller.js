@@ -17,7 +17,7 @@ exports._Get = async (req, res) => {
  */
 exports._Post = async (req, res) => {
     new Group(req.body).save().then(group => {
-        return res.status(200).send(groups !== null ? groups : {});
+        return res.status(200).send(group !== null ? group : {});
     }).catch(err => {
         return res.status(406).send(err);
     });

@@ -13,6 +13,11 @@ export class GroupService {
     return this.Http.get('/api/group', { headers: this.Headers(Token) });
   }
 
+  createGroup(Token: String, Group: any): Observable<any> {
+    console.log(Group);
+    return this.Http.post('/api/group', Group, { headers: this.Headers(Token) });
+  }
+
   Headers(Token: String): HttpHeaders {
     return new HttpHeaders({
       'Content-Type': 'application/json',

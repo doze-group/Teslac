@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
+import { GroupService } from 'src/app/Services/group.service';
 import iziToast from 'izitoast';
 import { ChatService } from 'src/app/Services/chat.service';
 import { FormGroup } from '@angular/forms';
@@ -18,27 +19,29 @@ export class HomeComponent implements OnInit {
   Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faUsers, faEdit];
   FormControl: FormGroup = new Group().FormGroup();
   Submited: boolean = false;
-  ArraySub: any[] = [];
   Conversations: Subject<Array<any>> = new BehaviorSubject([]);
+  ConversationsGroup: Subject<Array<any>> = new BehaviorSubject([]);
   Main: Subject<boolean> = new BehaviorSubject(true);
   Loading: Subject<boolean> = new BehaviorSubject(false);
   Chat: Subject<any> = new BehaviorSubject({});
 
-  constructor(private ConversationService: ConversationService, private ChatService: ChatService) { }
+  constructor(private ConversationService: ConversationService, private ChatService: ChatService, private GroupService: GroupService) { }
 
   ngOnInit() {
-    console.log(this.User.User);
     this.ConversationService.getConversations(this.User.Token).toPromise().then(conversations => {
       this.ChatService.Connect();
-      let filter = [];
-      conversations.map(item => {
-        item.Members = item.Members.filter(item => item._id !== this.User.User._id);
-        filter.push(item);
-      });
-      this.ArraySub = filter;
-      this.Conversations.next(filter);
-      this.Loading.next(true);
+      this.Conversations.next(this.FilterMember(conversations));
       this.ChatService.JoinRooms(conversations);
+      this.GroupService.getGroups(this.User.Token).toPromise().then(groups => {
+        this.ConversationsGroup.next(this.FilterMember(groups));
+        this.Loading.next(true);
+        this.ChatService.JoinRooms(conversations);
+      }).catch(err => {
+        iziToast.error({
+          title: 'Error',
+          message: 'Error al encontrar tus datos intente de nuevo'
+        });
+      });
     }).catch(err => {
       iziToast.error({
         title: 'Error',
@@ -48,10 +51,21 @@ export class HomeComponent implements OnInit {
     this.HandlerMessage();
   }
 
+  FilterMember(conversations: Array<any>): Array<any> {
+    let filter = [];
+    conversations.map(item => {
+      item.Members = item.Members.filter(item => item._id !== this.User.User._id);
+      filter.push(item);
+    });
+    return filter;
+  }
+
   ChangeMain = (Chat: any = {}, Exits: boolean = false) => {
     if ('{}' !== JSON.stringify(Chat) && !Exits) {
-      this.ArraySub.push(Chat);
-      this.Conversations.next(this.ArraySub);
+      this.Conversations.subscribe(conversations => {
+        conversations.push(Chat);
+        this.ChatService.JoinRooms([Chat]);
+      }).unsubscribe();
     } else if ('{}' !== JSON.stringify(Chat)) {
       Chat.Members = Chat.Members.filter(item => item._id !== this.User.User._id);
     }
@@ -102,6 +116,24 @@ export class HomeComponent implements OnInit {
         }, true],
       ],
     });
+  }
+
+  CreateGroup(){
+    if (this.FormControl.valid) {
+      this.Loading.next(true);
+      this.FormControl.value.Members.push(this.User.User._id);
+      this.GroupService.createGroup(this.User.Token, Object.assign({'Admin': this.User.User._id}, this.FormControl.value)).toPromise().then(group => {
+        this.ConversationsGroup.subscribe(conversations => {
+          conversations.push(group);
+          this.ChatService.JoinRooms([group]);
+        }).unsubscribe();
+      }).catch(err => {
+        iziToast.error({
+          title: 'Error',
+          message: 'Error al encontrar tus datos intente de nuevo'
+        });
+      });
+    }
   }
 
 }
