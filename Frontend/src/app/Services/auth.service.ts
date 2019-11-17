@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { UserLogin, UserRegistrer } from '../Models/user';
+import { UserLogin, UserRegistrer, User } from '../Models/user';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,12 +11,12 @@ export class AuthService {
 
   constructor(private Http: HttpClient) { }
 
-  Login(User: UserLogin): Promise<any> {
-    return this.Http.post('/api/user/login', User).toPromise();
+  Login(User: UserLogin): Observable<User> {
+    return this.Http.post<User>('/api/user/login', User);
   }
 
-  SignUp(User: UserRegistrer): Promise<any> {
-    return this.Http.post('/api/user', User).toPromise();
+  SignUp(User: UserRegistrer): Observable<User> {
+    return this.Http.post<User>('/api/user', User);
   }
 
   isAuthenticated(): boolean {

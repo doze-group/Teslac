@@ -1,11 +1,6 @@
 const Moongoose = require('mongoose');
 const schema = Moongoose.Schema;
-
-const Messages = new schema({
-    Message: { type: String, required: true },
-    User: { type: schema.Types.ObjectId, ref: 'User', required: true },
-    CreateAt: { type: Date, default: Date.now },
-});
+const { Message } = require('./Message.model');
 
 const Task = new schema({
     Task: { type: String, required: true },
@@ -15,11 +10,12 @@ const Task = new schema({
 
 const Tables = new schema({
     Title: { type: String, required: true },
-    Tasks: { type: [Task], default: [] }
+    Tasks: { type: [Task], default: [] },
+    CreateAt: { type: Date, default: Date.now }
 });
 
 const Project = new schema({
-    Messages: { type: [Messages], default: [] },
+    Messages: { type: [Message], default: [] },
     Tables: { type: [Tables], default: [] },
     Admin: { type: schema.Types.ObjectId, required: true, ref: 'User' },
     Members: { type: [{ type: schema.Types.ObjectId, ref: 'User', required: true }], required: true },

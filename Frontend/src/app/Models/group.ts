@@ -1,14 +1,21 @@
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { User } from './user';
 
 export class Group {
-    FormGroup(): FormGroup {
-        return new FormGroup({
-            DisplayName: new FormControl('', {
-                validators: [Validators.required]
-            }),
-            Members: new FormControl([], {
-                validators: [Validators.required]
-            })
-        });
+
+    DisplayName: String;
+    UrlImage: String;
+    Messages: Array<Message>;
+    Admin: String;
+    CreateAt: String;
+    Members: Array<User>;
+
+    constructor(DisplayName: String, UrlImage: String = undefined, Messages: Array<Message>, Admin: String, CreateAt: String = undefined, Members: Array<User>) {
+        this.DisplayName = DisplayName;
+        this.UrlImage = UrlImage;
+        this.Messages = Messages;
+        this.Admin = Admin;
+        this.CreateAt = CreateAt;
+        this.Members = Members;
     }
+
 }

@@ -1,37 +1,23 @@
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-
 export class User {
-    FormLogin() {
-        return new FormGroup({
-            Username: new FormControl('', {
-                validators: [Validators.required, Validators.minLength(10)]
-            }),
-            Password: new FormControl('', {
-                validators: [Validators.required]
-            })
-        });
-    }
-    FormSignUp() {
-        return new FormGroup({
-            Username: new FormControl('', {
-                validators: [Validators.required, Validators.minLength(10)]
-            }),
-            Password: new FormControl('', {
-                validators: [Validators.required]
-            }),
-            Email: new FormControl('', {
-                validators: [Validators.required, Validators.email]
-            }),
-            Institutional: new FormControl('', {
-                validators: [Validators.required, Validators.minLength(10)]
-            }),
-            DisplayName: new FormControl('', {
-                validators: [Validators.required, Validators.minLength(1), Validators.maxLength(50)]
-            }),
-            Role: new FormControl('', {
-                validators: [Validators.required]
-            })
-        });
+    Username: String;
+    DisplayName: String;
+    Email: String;
+    Role: String;
+    Institucional: String;
+    UrlImage: String;
+    Description: String;
+    Token: String;
+    CreateAt: String;
+
+    constructor(Username: String, DisplayName: String, Email: String = '', Institucional: String = '', UrlImage: String, Description: String = '', Token: String = '', CreateAt: String = undefined){
+        this.Username = Username;
+        this.DisplayName = DisplayName;
+        this.Email = Email;
+        this.Institucional = Institucional;
+        this.UrlImage = UrlImage;
+        this.Description = Description;
+        this.Token = Token;
+        this.CreateAt = CreateAt;
     }
 }
 

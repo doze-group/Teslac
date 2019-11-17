@@ -6,7 +6,8 @@ const Cloudinary = require('cloudinary').v2;
 exports.Config = {
     Port: process.env.PORT || 3000,
     Db: process.env.MONGO || 'mongodb://localhost:27017/teslac',
-    Token: 'KJSFHUASIFHWFIHhnfiufghskffjasdfkasdfhakjfhw2w846284284LNDLKFDNSJKLN'
+    Token: process.env.Token ||'KJSFHUASIFHWFIHhnfiufghskffjasdfkasdfhakjfhw2w846284284LNDLKFDNSJKLN',
+    Encrypt: process.env.Encrypt || 'FHFWIUFHEFUEFHNJDSFNDsknskfnwiwikwfwf.fror2-rp29o2292--<'
 }
 
 //Storage configuration multer

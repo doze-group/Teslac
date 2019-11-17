@@ -1,15 +1,10 @@
 //Imports modules
 const Moongoose = require('mongoose');
 const schema = Moongoose.Schema;
-
-const Messages = new schema({
-    Message: { type: String, required: true },
-    User: { type: schema.Types.ObjectId, ref: 'User', required: true },
-    CreateAt: { type: Date, default: Date.now },
-});
+const { Message } = require('./Message.model');
 
 const Conversation = new schema({
-    Messages: { type: [Messages], default: [] },
+    Messages: { type: [Message], default: [] },
     Members: { type: [{ type: schema.Types.ObjectId, ref: 'User', required: true }], required: true },
     CreateAt: { type: Date, default: Date.now }
 });

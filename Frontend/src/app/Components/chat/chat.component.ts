@@ -112,7 +112,7 @@ export class ChatComponent implements OnInit {
     this.ConversationService.createMessage(this.User.Token, {
       'Message': (document.getElementById('Message') as any).value,
       'User': this.User.User._id
-    }, this.Chat._id).toPromise().then(message => {
+    }, this.Chat._id).subscribe(message => {
       this.ChatService.Emit('Chat:Message', {
         'Room': this.Chat._id,
         'Message': message.Messages[message.Messages.length - 1],
@@ -131,7 +131,7 @@ export class ChatComponent implements OnInit {
       setTimeout(() => {
         document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
       }, 100);
-    })
+    }).unsubscribe();
   }
 
 }
