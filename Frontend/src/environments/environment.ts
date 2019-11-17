@@ -4,7 +4,14 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'api'
+  apiUrl: 'api',
+  Encrypt: 'sfkhehfuewfhefheoIFHIFEHFIOEWGHEWIGOHasfe<g<e<24<22<24242-.4-.2{+´2422',
+  apiUrlLogin: '/api/user/login/',
+  apiUrlUser: '/api/user/',
+  apiUrlUserUpload: '/user/upload/',
+  apiUrlConversation: '/api/conversation/',
+  apiUrlGroup: '/api/group/',
+  apiUrlProject: '/api/project/',
 };
 
 /*

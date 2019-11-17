@@ -34,8 +34,7 @@ exports._GetName = (req, res) => {
 
 //new user
 exports._Post = (req, res) => {
-    req.body.Password = CryptoJS.AES.encrypt(req.body.Password, Config.Encrypt).toString(CryptoJS.enc.Base64);
-    console.log(req.body);
+    req.body.Password = CryptoJS.AES.encrypt(req.body.Password, Config.Encrypt);
     new User(req.body).save().then(user => {
         const User = user.toJSON();
         delete User.Password;
@@ -50,21 +49,20 @@ exports._Post = (req, res) => {
 
 //Login
 exports._Login = (req, res) => {
-    const password = CryptoJS.AES.encrypt(req.body.Password, Config.Encrypt).toString(CryptoJS.enc.Base64);
-    console.log(password);
-    User.findOne().where('Username').equals(req.body.Username).where('Password')
-        .equals(password).then(user => {
-            if(user == null) return res.status(401).send({});
-            const User = user.toJSON();
-            delete User.Password;
-            return res.status(200).send({
-                ...User,
-                Token: CreateToken(user.toJSON())
-            });
-        }).catch(err => {
-            console.log(err);
-            return res.status(406).send(err);
+    User.findOne().where('Username').equals(req.body.Username).then(user => {
+        if (user == null) return res.status(401).send({});
+        const password = CryptoJS.AES.decrypt(user.toJSON().Password, Config.Encrypt).toString(CryptoJS.enc.Utf8);
+        if (password !== req.body.Password) return res.status(401).send({});
+        const User = user.toJSON();
+        delete User.Password;
+        return res.status(200).send({
+            ...User,
+            Token: CreateToken(User)
         });
+    }).catch(err => {
+        console.log(err);
+        return res.status(406).send(err);
+    });
 }
 
 //change image
