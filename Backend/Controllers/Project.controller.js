@@ -60,7 +60,7 @@ exports._DeleteTable = (req, res) => {
     Project.findByIdAndUpdate(req.params.Id, { '$pull': { 'Tables': { '_id': req.params.IdTable } } }, { new: true })
         .where('Members').in([req.headers._id])
         .then(project => {
-            return res.status(projects !== null ? 200 : 404).send(project !== null ? project : {});
+            return res.status(project !== null ? 200 : 404).send(project !== null ? project : {});
         }).catch(err => {
             return res.status(406).send(err);
         });

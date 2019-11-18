@@ -17,6 +17,9 @@ import { SocketIoModule } from 'ngx-socket-io';
 import { ChatService } from '../Services/chat.service';
 import { ProjectComponent } from '../Components/project/project.component';
 import { DragAndDropModule } from 'angular-draggable-droppable';
+import { environment } from 'src/environments/environment';
+import { LocalStorageService } from '../Services/local-storage.service';
+import { TaskComponent } from '../Components/task/task.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +28,8 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     ListconversationsComponent,
     ListusersComponent,
     ChatComponent,
-    ProjectComponent
+    ProjectComponent,
+    TaskComponent
   ],
   imports: [
     CommonModule,
@@ -35,8 +39,8 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
     HttpClientModule,
     AuthModule,
     DragAndDropModule,
-    SocketIoModule.forRoot({ options: {}, url: '//localhost:3000' })
+    SocketIoModule.forRoot({ options: {}, url: environment.apiUrl })
   ],
-  providers: [ProjectService, GroupService, UserService, ChatService]
+  providers: [ProjectService, GroupService, UserService, ChatService, LocalStorageService]
 })
 export class UserModule { }

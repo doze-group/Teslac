@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: '[http://ejemplo.com](http://localhost:8000)',
+  apiUrl: '//localhost:3000',
   Encrypt: 'sfkhehfuewfhefheoIFHIFEHFIOEWGHEWIGOHasfe<g<e<24<22<24242-.4-.2{+´242222osrjwi',
   apiUrlLogin: '/user/login/',
   apiUrlUser: '/user/',

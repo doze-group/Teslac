@@ -71,45 +71,10 @@
                                 <div class="card-body">
                                     <div class="col pt-2" mwlDraggable (dragEnd)="this.TaskSelect = task"
                                         style="z-index: 100;" *ngFor="let task of item.Tasks">
-                                        <a class="card border-light shadow-sm animated zoomIn cardwidth"
-                                            style="cursor: pointer;">
-                                            <div class="card-header gradient py-0">
-                                                <div class="row justify-content-between">
-                                                    <div class="btn float-left text-white">
-                                                        <fa-icon [icon]="Icons[1]">
-                                                        </fa-icon>
-                                                    </div>
-                                                    <button class="btn text-white float-right" id="btn">
-                                                        <fa-icon [icon]="Icons[7]"></fa-icon>
-                                                    </button>
-                                                    <button class="btn text-danger float-right" id="btn"
-                                                        (click)="deleteTask(task, item._id)">
-                                                        <fa-icon [icon]="Icons[5]"></fa-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                            <div class="card-body">
-                                                <div class="row w-100 mx-0">
-                                                    <div class="col px-0 align-self-center">
-                                                        {{task.Task}}
-                                                    </div>
-                                                    <div class="col-auto px-0 align-self-center">
-                                                        <img class="rounded-circle float-right"
-                                                            [src]="FilterAssigned(task.Assigned)" alt="card image"
-                                                            width="25" height="25"
-                                                            onerror="this.src = '../../assets/Images/errorImage.svg'">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="float-left">
-                                                    {{task.CreateAt | date: 'MM/d/y'}}
-                                                </div>
-                                                <div class="float-right">
-                                                    {{task.CreateAt | date: 'h:mm a'}}
-                                                </div>
-                                            </div>
-                                        </a>
+                                        <Task [questionToast]="this.questionToast" (End)="this.endDeleteTask($event)"
+                                            [User]="this.User" [Task]="task" [Project]="this.Project"
+                                            [_idTable]="item._id">
+                                        </Task>
                                     </div>
                                 </div>
                             </div>

@@ -1,0 +1,35 @@
+<a class="card border-light shadow-sm animated zoomIn cardwidth" style="cursor: pointer;">
+    <div class="card-header gradient py-0">
+        <div class="row justify-content-between">
+            <div class="btn float-left text-white">
+                <fa-icon [icon]="Icons[0]">
+                </fa-icon>
+            </div>
+            <button class="btn text-white float-right" id="btn">
+                <fa-icon [icon]="Icons[1]"></fa-icon>
+            </button>
+            <button class="btn text-danger float-right" id="btn" (click)="deleteTask()">
+                <fa-icon [icon]="Icons[2]"></fa-icon>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row w-100 mx-0">
+            <div class="col px-0 align-self-center">
+                {{Task.Task}}
+            </div>
+            <div class="col-auto px-0 align-self-center">
+                <img class="rounded-circle float-right" [src]="FilterAssigned()" alt="card image"
+                    width="25" height="25" onerror="this.src = '../../assets/Images/errorImage.svg'">
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <div class="float-left">
+            {{Task.CreateAt | date: 'MM/d/y'}}
+        </div>
+        <div class="float-right">
+            {{Task.CreateAt | date: 'h:mm a'}}
+        </div>
+    </div>
+</a>

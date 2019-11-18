@@ -25,7 +25,7 @@ export class ProjectComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private ProjectService: ProjectService, private routing: Router, private _localStorage: LocalStorageService) {
     this.User = this._localStorage.getStorage();
-   }
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -43,11 +43,6 @@ export class ProjectComponent implements OnInit {
         });
       });
     }).unsubscribe();
-  }
-
-  FilterAssigned(As: String) {
-    let fil = this.Project.Members.filter(item => item._id === As);
-    return fil.length >= 1 ? fil[0].UrlImage : 'https://image.flaticon.com/icons/svg/660/660611.svg';
   }
 
   DropEnd(Table, index) {
@@ -112,30 +107,9 @@ export class ProjectComponent implements OnInit {
     }
   }
 
-  deleteTask(task, id) {
-    this.questionToast('¿Seguro de eliminar esta tarea?', () => {
-      this.ProjectService.deleteTask(this.User.Token, this.Project._id, id, task._id).toPromise().then(project => {
-        this.Tables.subscribe(tables => {
-          tables.forEach((item, index) => {
-            if (id === item._id) {
-              item.Tasks = project.Tables[index].Tasks;
-              return;
-            }
-          });
-          this.TableSelect = undefined;
-        }).unsubscribe();
-      }).catch(err => {
-        iziToast.error({
-          title: 'Error',
-          message: 'Ha ocurrido un error'
-        });
-      });
-    })
-  }
-
   deleteTable(id) {
     this.questionToast('¿Seguro de eliminar este tablero?', () => {
-      this.ProjectService.deleteTable(this.User.Token, this.Project._id, id).toPromise().then(project => {
+      this.ProjectService.deleteTable(this.User.Token, this.Project._id, id).subscribe(project => {
         this.Tables.subscribe(tables => {
           tables.forEach((item, index) => {
             if (id === item._id) {
@@ -145,10 +119,9 @@ export class ProjectComponent implements OnInit {
           });
           this.TableSelect = undefined;
         }).unsubscribe();
-      }).catch(err => {
+      }, err => {
         iziToast.error({
-          title: 'Error',
-          message: 'Ha ocurrido un error'
+          message: 'Ha ocurrido un error vuelva a intentar'
         });
       });
     });
@@ -186,6 +159,18 @@ export class ProjectComponent implements OnInit {
           instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
         }, true],
       ],
+    });
+  }
+
+  endDeleteTask(event) {
+    this.Tables.subscribe(tables => {
+      tables.forEach((item, index) => {
+        if (event._idTable === item._id) {
+          item.Tasks = event.Project.Tables[index].Tasks;
+          return;
+        }
+      });
+      this.TaskSelect = undefined;
     });
   }
 
