@@ -7,6 +7,11 @@ import iziToast from 'izitoast';
 import { ChatService } from 'src/app/Services/chat.service';
 import { FormGroup } from '@angular/forms';
 import { Group } from 'src/app/Models/group';
+import { Forms } from 'src/app/Models/forms';
+import { User } from 'src/app/Models/user';
+import { LocalStorageService } from 'src/app/Services/local-storage.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Conversation } from 'src/app/Models/conversation';
 
 @Component({
   selector: 'app-home',
@@ -15,46 +20,46 @@ import { Group } from 'src/app/Models/group';
 })
 export class HomeComponent implements OnInit {
 
-  User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
+  User: User;
   Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faUsers, faEdit];
-  FormControl: FormGroup = new Group().FormGroup();
+  FormControl: FormGroup = new Forms().FormGroup();
   Submited: boolean = false;
-  Conversations: Subject<Array<any>> = new BehaviorSubject([]);
-  ConversationsGroup: Subject<Array<any>> = new BehaviorSubject([]);
+  Conversations: Subject<Array<Conversation>> = new BehaviorSubject([]);
+  ConversationsGroup: Subject<Array<Group>> = new BehaviorSubject([]);
   Main: Subject<boolean> = new BehaviorSubject(true);
   Loading: Subject<boolean> = new BehaviorSubject(false);
   Chat: Subject<any> = new BehaviorSubject({});
 
-  constructor(private ConversationService: ConversationService, private ChatService: ChatService, private GroupService: GroupService) { }
+  constructor(private ConversationService: ConversationService, private ChatService: ChatService, private GroupService: GroupService, private _localStorage: LocalStorageService) {
+    this.User = this._localStorage.getStorage();
+  }
 
   ngOnInit() {
-    this.ConversationService.getConversations(this.User.Token).toPromise().then(conversations => {
+    this.ConversationService.getConversations(this.User.Token).subscribe(conversations => {
       this.ChatService.Connect();
       this.Conversations.next(this.FilterMember(conversations));
       this.ChatService.JoinRooms(conversations);
-      this.GroupService.getGroups(this.User.Token).toPromise().then(groups => {
+      this.GroupService.getGroups(this.User.Token).subscribe(groups => {
         this.ConversationsGroup.next(this.FilterMember(groups));
         this.Loading.next(true);
         this.ChatService.JoinRooms(conversations);
-      }).catch(err => {
+      }, (err: HttpErrorResponse) => {
         iziToast.error({
-          title: 'Error',
           message: 'Error al encontrar tus datos intente de nuevo'
         });
       });
-    }).catch(err => {
+    }, (err: HttpErrorResponse) => {
       iziToast.error({
-        title: 'Error',
         message: 'Error al encontrar tus datos intente de nuevo'
       });
     });
     this.HandlerMessage();
   }
 
-  FilterMember(conversations: Array<any>): Array<any> {
+  FilterMember(conversations: Array<Conversation>): Array<any> {
     let filter = [];
     conversations.map(item => {
-      item.Members = item.Members.filter(item => item._id !== this.User.User._id);
+      item.Members = item.Members.filter(item => item._id !== this.User._id);
       filter.push(item);
     });
     return filter;
@@ -67,7 +72,7 @@ export class HomeComponent implements OnInit {
         this.ChatService.JoinRooms([Chat]);
       }).unsubscribe();
     } else if ('{}' !== JSON.stringify(Chat)) {
-      Chat.Members = Chat.Members.filter(item => item._id !== this.User.User._id);
+      Chat.Members = Chat.Members.filter(item => item._id !== this.User._id);
     }
     this.Chat.next(Chat);
     this.Main.next('{}' === JSON.stringify(Chat));
@@ -118,11 +123,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  CreateGroup(){
+  CreateGroup() {
     if (this.FormControl.valid) {
       this.Loading.next(true);
-      this.FormControl.value.Members.push(this.User.User._id);
-      this.GroupService.createGroup(this.User.Token, Object.assign({'Admin': this.User.User._id}, this.FormControl.value)).toPromise().then(group => {
+      this.FormControl.value.Members.push(this.User._id);
+      this.GroupService.createGroup(this.User.Token, Object.assign({ 'Admin': this.User._id }, this.FormControl.value)).toPromise().then(group => {
         this.ConversationsGroup.subscribe(conversations => {
           conversations.push(group);
           this.ChatService.JoinRooms([group]);

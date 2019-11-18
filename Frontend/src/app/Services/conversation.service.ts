@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Conversation } from '../Models/conversation';
+import { Conversation, ConversationCreate } from '../Models/conversation';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class ConversationService {
     return this.Http.get<Conversation>(environment.apiUrlConversation + Id, { headers: this.Headers(Token) });
   }
 
-  createConversation(Token: String, Conversation: Conversation): Observable<Conversation> {
+  createConversation(Token: String, Conversation: ConversationCreate): Observable<Conversation> {
     return this.Http.post<Conversation>(environment.apiUrlConversation, Conversation, { headers: this.Headers(Token) });
   }
 

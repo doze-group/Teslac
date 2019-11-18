@@ -6,7 +6,7 @@ const { Group } = require('../Models/Group.model');
 exports._Get = (req, res) => {
     Group.find().where('Members').in([req.headers._id])
         .populate({ path: 'Members', populate: { path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' } }).then(groups => {
-            return res.status(group !== null ? 200 : 404).send(groups !== null ? groups : {});
+            return res.status(groups !== null ? 200 : 404).send(groups !== null ? groups : {});
         }).catch(err => {
             return res.status(406).send(err);
         });
@@ -33,7 +33,7 @@ exports._Put = (req, res) => {
             path: 'Members', populate:
                 { path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' }
         }).then(message => {
-            return res.status(group !== null ? 200 : 404).send(message !== null ? message : {});
+            return res.status(message !== null ? 200 : 404).send(message !== null ? message : {});
         }).catch(err => {
             return res.status(406).send(err);
         });
@@ -52,7 +52,7 @@ exports._Delete = (req, res) => {
 
 exports._DeleteMember = (req, res) => {
     Group.findByIdAndUpdate(req.params.Id, { '$pull': { 'Members': req.body.Member } }).then(message => {
-        return res.status(group !== null ? 200 : 404).send(message !== null ? message : {});
+        return res.status(message !== null ? 200 : 404).send(message !== null ? message : {});
     }).catch(err => {
         return res.status(406).send(err);
     });

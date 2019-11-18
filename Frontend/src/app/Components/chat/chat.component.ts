@@ -3,6 +3,8 @@ import { Subject, BehaviorSubject, Subscribable, Subscriber, Subscription } from
 import { faLocationArrow, faHandPointLeft } from '@fortawesome/free-solid-svg-icons';
 import { ChatService } from 'src/app/Services/chat.service';
 import { ConversationService } from 'src/app/Services/conversation.service';
+import { LocalStorageService } from 'src/app/Services/local-storage.service';
+import { User } from 'src/app/Models/user';
 
 @Component({
   selector: 'App-Chat',
@@ -19,10 +21,12 @@ export class ChatComponent implements OnInit {
   isGroup: boolean = false;
   Icons: any[] = [faLocationArrow, faHandPointLeft];
   LoadingMessage: Subject<boolean> = new BehaviorSubject(false);
-  User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
+  User: User;
   Suscriptions: Array<Subscription> = [];
 
-  constructor(private ChatService: ChatService, private ConversationService: ConversationService) { }
+  constructor(private ChatService: ChatService, private ConversationService: ConversationService, private _localstorage: LocalStorageService) { 
+    this.User = this._localstorage.getStorage();
+  }
 
   OnChange(text) {
     if (text.target.value === '')
@@ -33,7 +37,7 @@ export class ChatComponent implements OnInit {
     if (event.which === 13 && !event.shiftKey)
       this.PushMessage();
     else
-      this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: this.User.User.DisplayName })
+      this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: this.User.DisplayName })
   }
 
   ngOnInit() {
@@ -81,16 +85,16 @@ export class ChatComponent implements OnInit {
   }
 
   Filter(user: any) {
-    if (user.User !== this.User.User._id) {
+    if (user.User !== this.User._id) {
       let fil = this.Chat.Members.filter(item => item._id === user.User);
       return fil.length >= 1 ? fil[0].DisplayName : 'Usuario Eliminado';
     } else {
-      return this.User.User.DisplayName;
+      return this.User.DisplayName;
     }
   }
 
   FilterBool(user: any): boolean {
-    if (user.User !== this.User.User._id) {
+    if (user.User !== this.User._id) {
       let fil = this.Chat.Members.filter(item => item._id === user.User);
       return fil.length >= 1;
     } else {
@@ -98,12 +102,12 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  FilterImage(user: any): boolean {
-    if (user.User !== this.User.User._id) {
+  FilterImage(user: any): String {
+    if (user.User !== this.User._id) {
       let fil = this.Chat.Members.filter(item => item._id === user.User);
       return fil.length >= 1 ? fil[0].UrlImage : 'Usuario Eliminado';
     } else {
-      return this.User.User.UrlImage;
+      return this.User.UrlImage;
     }
   }
 
@@ -111,7 +115,7 @@ export class ChatComponent implements OnInit {
     this.LoadingMessage.next(true);
     this.ConversationService.createMessage(this.User.Token, {
       'Message': (document.getElementById('Message') as any).value,
-      'User': this.User.User._id
+      'User': this.User._id
     }, this.Chat._id).subscribe(message => {
       this.ChatService.Emit('Chat:Message', {
         'Room': this.Chat._id,
@@ -119,7 +123,7 @@ export class ChatComponent implements OnInit {
         'Member': {
           'DisplayName': this.Chat.DisplayName,
           'UrlImage': this.Chat.UrlImage,
-          'Message': this.isGroup ? this.User.User.DisplayName + ': ' + message.Messages[message.Messages.length - 1] : message.Messages[message.Messages.length - 1]
+          'Message': this.isGroup ? this.User.DisplayName + ': ' + message.Messages[message.Messages.length - 1] : message.Messages[message.Messages.length - 1]
         }
       });
       this.Messages.subscribe(messages => {
@@ -131,7 +135,7 @@ export class ChatComponent implements OnInit {
       setTimeout(() => {
         document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
       }, 100);
-    }).unsubscribe();
+    });
   }
 
 }

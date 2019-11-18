@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import iziToast from 'izitoast';
+import { User } from 'src/app/Models/user';
+import { LocalStorageService } from 'src/app/Services/local-storage.service';
 
 @Component({
   selector: 'ListConversations',
@@ -13,9 +15,11 @@ export class ListconversationsComponent implements OnInit {
   @Input() Conversations: Subject<Array<any>>;
   @Input() isGroup: boolean;
   @Input() Change: Function;
-  User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
+  User: User;
 
-  constructor(private ConversationService: ConversationService) { }
+  constructor(private ConversationService: ConversationService, private _localStorage: LocalStorageService) {
+    this.User = this._localStorage.getStorage();
+   }
 
   ngOnInit() {
   }

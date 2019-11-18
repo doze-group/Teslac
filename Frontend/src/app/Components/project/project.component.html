@@ -1,106 +1,116 @@
-<div class="row justify-content-center animated zoomIn w-100 mr-0 ml-0" style="height: 100%">
-    <div class="col">
-        <div class="row justify-content-center">
-            <div class="col-11 col-md-9 col-xl-7 align-self-center pt-2">
-                <div class="card text-center shadow">
-                    <div class="card-header gradient" style="height: 140px;">
-                        <div class="row justify-content-end" *ngIf="this.Project.Admin === this.User.User._id">
-                            <button class="btn text-danger" (click)="this.deleteProject()">
-                                <fa-icon [icon]="Icons[5]" size="lg"></fa-icon>
-                            </button>
-                            <button class="btn text-white">
-                                <fa-icon [icon]="Icons[6]" size="lg"></fa-icon>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row w-100 justify-content-center mr-0 ml-0">
-                            <div class="card-block card-img-profile">
-                                <img class="img-fluid" src="../../assets/Images/project.svg" alt="card image"
-                                    alt="Imagen proyecto">
+<div *ngIf="Loading | async; else noLoad">
+    <div class="row pt-3 justify-content-center">
+        <div class="spinner-border text-primary" role="status" [hidden]="!Loading">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+</div>
+<ng-template #noLoad>
+    <div class="row justify-content-center animated zoomIn w-100 mr-0 ml-0" style="height: 100%">
+        <div class="col">
+            <div class="row justify-content-center">
+                <div class="col-11 col-md-9 col-xl-7 align-self-center pt-2">
+                    <div class="card text-center shadow">
+                        <div class="card-header gradient" style="height: 140px;">
+                            <div class="row justify-content-end" *ngIf="this.Project.Admin === this.User._id">
+                                <button class="btn text-danger" (click)="this.deleteProject()">
+                                    <fa-icon [icon]="Icons[5]" size="lg"></fa-icon>
+                                </button>
+                                <button class="btn text-white">
+                                    <fa-icon [icon]="Icons[6]" size="lg"></fa-icon>
+                                </button>
                             </div>
                         </div>
-                        <h4 class="card-title">{{Project.Title}}</h4>
-                        <p class="card-text">{{Project.Description}}</p>
+                        <div class="card-body">
+                            <div class="row w-100 justify-content-center mr-0 ml-0">
+                                <div class="card-block card-img-profile">
+                                    <img class="img-fluid" src="../../assets/Images/project.svg" alt="card image"
+                                        alt="Imagen proyecto">
+                                </div>
+                            </div>
+                            <h4 class="card-title">{{Project.Title}}</h4>
+                            <p class="card-text">{{Project.Description}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row pt-2 justify-content-center">
-            <div class="col-12 col-md-11 align-self-center">
-                <div class="row w-100 pb-2 mx-0">
-                    <ul class="nav nav-tabs justify-content-center w-100">
-                        <li class="nav-item">
-                            <div class="nav-link active">
-                                Tableros
-                                <fa-icon [icon]="Icons[2]" class="pl-1"></fa-icon>
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#table">
-                                <fa-icon [icon]="Icons[3]"></fa-icon>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-                <div class="row w-100 mx-0 justify-content-md-start justify-content-center">
-                    <div class="col-11 col-sm-9 col-md-4 col-xl-3"
-                        *ngFor="let item of Tables | async; let index = index" mwlDroppable
-                        (drop)="DropEnd(item, index)">
-                        <div class="card border-light shadow-sm">
-                            <div class="card-header font-weight-bold">
-                                <fa-icon [icon]="Icons[2]" class="pr-1"></fa-icon>
-                                {{item.Title}}
-                                <a class="text-danger float-right pl-3" style="cursor: pointer;"
-                                    (click)="deleteTable(item._id)">
-                                    <fa-icon [icon]="Icons[5]"></fa-icon>
+            <div class="row pt-2 justify-content-center">
+                <div class="col-12 col-md-11 align-self-center">
+                    <div class="row w-100 pb-2 mx-0">
+                        <ul class="nav nav-tabs justify-content-center w-100">
+                            <li class="nav-item">
+                                <div class="nav-link active">
+                                    Tableros
+                                    <fa-icon [icon]="Icons[2]" class="pl-1"></fa-icon>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#table">
+                                    <fa-icon [icon]="Icons[3]"></fa-icon>
                                 </a>
-                                <a (click)="this.TableSelect = item" data-toggle="modal" data-target="#task">
-                                    <fa-icon [icon]="Icons[3]" class="float-right" style="cursor: pointer;"></fa-icon>
-                                </a>
-                            </div>
-                            <div class="card-body">
-                                <div class="col pt-2" mwlDraggable (dragEnd)="this.TaskSelect = task"
-                                    style="z-index: 100;" *ngFor="let task of item.Tasks">
-                                    <a class="card border-light shadow-sm animated zoomIn cardwidth"
-                                        style="cursor: pointer;">
-                                        <div class="card-header gradient py-0">
-                                            <div class="row justify-content-between">
-                                                <div class="btn float-left text-white">
-                                                    <fa-icon [icon]="Icons[1]">
-                                                    </fa-icon>
-                                                </div>
-                                                <button class="btn text-white float-right" id="btn">
-                                                    <fa-icon [icon]="Icons[7]"></fa-icon>
-                                                </button>
-                                                <button class="btn text-danger float-right" id="btn"
-                                                    (click)="deleteTask(task, item._id)">
-                                                    <fa-icon [icon]="Icons[5]"></fa-icon>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="row w-100 mx-0">
-                                                <div class="col px-0 align-self-center">
-                                                    {{task.Task}}
-                                                </div>
-                                                <div class="col-auto px-0 align-self-center">
-                                                    <img class="rounded-circle float-right"
-                                                        [src]="FilterAssigned(task.Assigned)" alt="card image"
-                                                        width="25" height="25"
-                                                        onerror="this.src = '../../assets/Images/errorImage.svg'">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer">
-                                            <div class="float-left">
-                                                {{task.CreateAt | date: 'MM/d/y'}}
-                                            </div>
-                                            <div class="float-right">
-                                                {{task.CreateAt | date: 'h:mm a'}}
-                                            </div>
-                                        </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="row w-100 mx-0 justify-content-md-start justify-content-center">
+                        <div class="col-11 col-sm-9 col-md-4 col-xl-3"
+                            *ngFor="let item of Tables | async; let index = index" mwlDroppable
+                            (drop)="DropEnd(item, index)">
+                            <div class="card border-light shadow-sm">
+                                <div class="card-header font-weight-bold">
+                                    <fa-icon [icon]="Icons[2]" class="pr-1"></fa-icon>
+                                    {{item.Title}}
+                                    <a class="text-danger float-right pl-3" style="cursor: pointer;"
+                                        (click)="deleteTable(item._id)">
+                                        <fa-icon [icon]="Icons[5]"></fa-icon>
                                     </a>
+                                    <a (click)="this.TableSelect = item" data-toggle="modal" data-target="#task">
+                                        <fa-icon [icon]="Icons[3]" class="float-right" style="cursor: pointer;">
+                                        </fa-icon>
+                                    </a>
+                                </div>
+                                <div class="card-body">
+                                    <div class="col pt-2" mwlDraggable (dragEnd)="this.TaskSelect = task"
+                                        style="z-index: 100;" *ngFor="let task of item.Tasks">
+                                        <a class="card border-light shadow-sm animated zoomIn cardwidth"
+                                            style="cursor: pointer;">
+                                            <div class="card-header gradient py-0">
+                                                <div class="row justify-content-between">
+                                                    <div class="btn float-left text-white">
+                                                        <fa-icon [icon]="Icons[1]">
+                                                        </fa-icon>
+                                                    </div>
+                                                    <button class="btn text-white float-right" id="btn">
+                                                        <fa-icon [icon]="Icons[7]"></fa-icon>
+                                                    </button>
+                                                    <button class="btn text-danger float-right" id="btn"
+                                                        (click)="deleteTask(task, item._id)">
+                                                        <fa-icon [icon]="Icons[5]"></fa-icon>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="card-body">
+                                                <div class="row w-100 mx-0">
+                                                    <div class="col px-0 align-self-center">
+                                                        {{task.Task}}
+                                                    </div>
+                                                    <div class="col-auto px-0 align-self-center">
+                                                        <img class="rounded-circle float-right"
+                                                            [src]="FilterAssigned(task.Assigned)" alt="card image"
+                                                            width="25" height="25"
+                                                            onerror="this.src = '../../assets/Images/errorImage.svg'">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card-footer">
+                                                <div class="float-left">
+                                                    {{task.CreateAt | date: 'MM/d/y'}}
+                                                </div>
+                                                <div class="float-right">
+                                                    {{task.CreateAt | date: 'h:mm a'}}
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -109,81 +119,81 @@
             </div>
         </div>
     </div>
-</div>
-<!-- Modal Table -->
-<div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="table" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Tablero</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <fa-icon [icon]="Icons[1]"></fa-icon>
-                        </span>
-                    </div>
-                    <input type="text" class="form-control" placeholder="Tablero Titulo" aria-label="Title"
-                        aria-describedby="addon-wrapping" required minlength="1" maxlength="20" id="TitleTable">
-                    <div class="invalid-feedback">
-                        Ingrese Titulo Válido
+    <!-- Modal Table -->
+    <div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="table" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Tablero</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon [icon]="Icons[1]"></fa-icon>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Tablero Titulo" aria-label="Title"
+                            aria-describedby="addon-wrapping" required minlength="1" maxlength="20" id="TitleTable">
+                        <div class="invalid-feedback">
+                            Ingrese Titulo Válido
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" (click)="createTable()" data-dismiss="modal"
-                    aria-label="Close">Crear</button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" (click)="createTable()" data-dismiss="modal"
+                        aria-label="Close">Crear</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Modal task -->
-<div class="modal fade" id="task" tabindex="-1" role="dialog" aria-labelledby="table" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Tarea
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <fa-icon [icon]="Icons[1]"></fa-icon>
-                        </span>
+    <!-- Modal task -->
+    <div class="modal fade" id="task" tabindex="-1" role="dialog" aria-labelledby="table" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Tarea
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon [icon]="Icons[1]"></fa-icon>
+                            </span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Tarea a Realizar" aria-label="Title"
+                            aria-describedby="addon-wrapping" required minlength="1" maxlength="20" id="TitleTask">
+                        <div class="invalid-feedback">
+                            Ingrese Terea Válido
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Tarea a Realizar" aria-label="Title"
-                        aria-describedby="addon-wrapping" required minlength="1" maxlength="20" id="TitleTask">
-                    <div class="invalid-feedback">
-                        Ingrese Terea Válido
+                    <div class="input-group pt-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <fa-icon [icon]="Icons[4]"></fa-icon>
+                            </span>
+                        </div>
+                        <select class="form-control" required id="Assigned">
+                            <option *ngFor="let member of Project.Members" [value]="member._id">{{member.DisplayName}}
+                            </option>
+                        </select>
+                        <div class="invalid-feedback justify-content-start">
+                            Usuario Requerido
+                        </div>
                     </div>
                 </div>
-                <div class="input-group pt-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">
-                            <fa-icon [icon]="Icons[4]"></fa-icon>
-                        </span>
-                    </div>
-                    <select class="form-control" required id="Assigned">
-                        <option *ngFor="let member of Project.Members" [value]="member._id">{{member.DisplayName}}
-                        </option>
-                    </select>
-                    <div class="invalid-feedback justify-content-start">
-                        Usuario Requerido
-                    </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" (click)="createTask()" data-dismiss="modal"
+                        aria-label="Close">Crear</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" (click)="createTask()" data-dismiss="modal"
-                    aria-label="Close">Crear</button>
             </div>
         </div>
     </div>
-</div>
+</ng-template>

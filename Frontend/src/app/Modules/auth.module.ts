@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthService } from '../Services/auth.service';
+import { LocalStorageService } from '../Services/local-storage.service';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,6 @@ import { AuthService } from '../Services/auth.service';
     FontAwesomeModule,
     HttpClientModule,
   ],
-  providers: [AuthService]
+  providers: [AuthService, LocalStorageService]
 })
 export class AuthModule { }

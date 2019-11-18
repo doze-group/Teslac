@@ -1,6 +1,6 @@
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 
-class Forms {
+export class Forms {
     FormGroup(): FormGroup {
         return new FormGroup({
             DisplayName: new FormControl('', {

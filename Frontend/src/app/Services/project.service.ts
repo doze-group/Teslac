@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Project } from '../Models/project';
+import { Project, ProjectCreate } from '../Models/project';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -19,7 +19,7 @@ export class ProjectService {
     return this.Http.get<Project>(environment.apiUrlProject + Id, { headers: this.Headers(Token) });
   }
 
-  createProject(Token: String, Project: any): Observable<Project> {
+  createProject(Token: String, Project: ProjectCreate): Observable<Project> {
     return this.Http.post<Project>('/api/project', Project, { headers: this.Headers(Token) });
   }
 

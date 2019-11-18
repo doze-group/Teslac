@@ -4,6 +4,9 @@ import { ProjectService } from 'src/app/Services/project.service';
 import { Subject, BehaviorSubject } from 'rxjs';
 import iziToast from 'izitoast';
 import { faPlus, faProjectDiagram, faTasks, faTv, faUser, faTimes, faEdit, faEye, faCogs } from '@fortawesome/free-solid-svg-icons';
+import { User } from 'src/app/Models/user';
+import { Project } from 'src/app/Models/project';
+import { LocalStorageService } from 'src/app/Services/local-storage.service';
 
 @Component({
   selector: 'app-project',
@@ -12,19 +15,21 @@ import { faPlus, faProjectDiagram, faTasks, faTv, faUser, faTimes, faEdit, faEye
 })
 export class ProjectComponent implements OnInit {
 
-  User: { User: any, Token: String } = JSON.parse(localStorage.getItem('User'));
-  Project: any = {};
+  User: User;
+  Project: Project;
   TaskSelect: any = undefined;
   TableSelect: any = undefined;
-  Tables: Subject<Array<any>> = new BehaviorSubject([]);
+  Tables: Subject<Array<Table>> = new BehaviorSubject([]);
   Loading: Subject<boolean> = new BehaviorSubject(true);
   Icons: Array<any> = [faProjectDiagram, faTasks, faTv, faPlus, faUser, faTimes, faCogs, faEye];
 
-  constructor(private route: ActivatedRoute, private ProjectService: ProjectService, private routing: Router) { }
+  constructor(private route: ActivatedRoute, private ProjectService: ProjectService, private routing: Router, private _localStorage: LocalStorageService) {
+    this.User = this._localStorage.getStorage();
+   }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.ProjectService.getProjectId(this.User.Token, params.get('id')).toPromise().then(project => {
+      this.ProjectService.getProjectId(this.User.Token, params.get('id')).subscribe(project => {
         if (JSON.stringify(project) === '{}') {
           this.routing.navigate(['/home']);
         } else {
@@ -32,12 +37,11 @@ export class ProjectComponent implements OnInit {
           this.Project = project;
           this.Tables.next(project.Tables);
         }
-      }).catch(err => {
+      }, err => {
         iziToast.error({
-          title: 'Error',
           message: 'Error al obtener el projecto'
-        })
-      })
+        });
+      });
     }).unsubscribe();
   }
 

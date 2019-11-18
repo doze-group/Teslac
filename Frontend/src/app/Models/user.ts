@@ -1,4 +1,5 @@
 export class User {
+    _id: String;
     Username: String;
     DisplayName: String;
     Email: String;
@@ -9,7 +10,7 @@ export class User {
     Token: String;
     CreateAt: String;
 
-    constructor(Username: String, DisplayName: String, Email: String = '', Institucional: String = '', UrlImage: String, Description: String = '', Token: String = '', CreateAt: String = undefined){
+    constructor(_id: String, Username: String='', DisplayName: String, Email: String = '', Institucional: String = '', UrlImage: String, Description: String = '', Token: String = '', CreateAt: String = undefined){
         this.Username = Username;
         this.DisplayName = DisplayName;
         this.Email = Email;
@@ -18,6 +19,7 @@ export class User {
         this.Description = Description;
         this.Token = Token;
         this.CreateAt = CreateAt;
+        this._id = _id;
     }
 }
 

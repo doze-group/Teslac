@@ -13,11 +13,11 @@ export class LocalStorageService {
 
   getStorage(): User {
     const User = localStorage.getItem('User');
-    if (User === null) return undefined;
+    if (User === null) return null;
     try {
       return JSON.parse(CryptoJS.AES.decrypt(User, environment.Encrypt).toString(CryptoJS.enc.Utf8)) as User;
     } catch (error) {
-      return undefined
+      return null;
     }
   }
 
