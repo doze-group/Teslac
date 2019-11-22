@@ -20,6 +20,7 @@ import { DragAndDropModule } from 'angular-draggable-droppable';
 import { environment } from 'src/environments/environment';
 import { LocalStorageService } from '../Services/local-storage.service';
 import { TaskComponent } from '../Components/task/task.component';
+import { ConfigProjectComponent } from '../Components/config-project/config-project.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { TaskComponent } from '../Components/task/task.component';
     ListusersComponent,
     ChatComponent,
     ProjectComponent,
-    TaskComponent
+    TaskComponent,
+    ConfigProjectComponent
   ],
   imports: [
     CommonModule,

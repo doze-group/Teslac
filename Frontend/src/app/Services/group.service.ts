@@ -15,6 +15,10 @@ export class GroupService {
     return this.Http.get<Array<Group>>(environment.apiUrlGroup, { headers: this.Headers(Token) });
   }
 
+  getGroup(Token: String, Id: String): Observable<Group> {
+    return this.Http.get<Group>(environment.apiUrlGroup + Id, { headers: this.Headers(Token) });
+  }
+
   createGroup(Token: String, Group: Group): Observable<Group> {
     return this.Http.post<Group>(environment.apiUrlGroup, Group, { headers: this.Headers(Token) });
   }

@@ -4,6 +4,7 @@ import { ConversationService } from 'src/app/Services/conversation.service';
 import iziToast from 'izitoast';
 import { User } from 'src/app/Models/user';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
+import { GroupService } from 'src/app/Services/group.service';
 
 @Component({
   selector: 'ListConversations',
@@ -17,7 +18,7 @@ export class ListconversationsComponent implements OnInit {
   @Input() Change: Function;
   User: User;
 
-  constructor(private ConversationService: ConversationService, private _localStorage: LocalStorageService) {
+  constructor(private ConversationService: ConversationService, private _localStorage: LocalStorageService, private GroupService: GroupService) {
     this.User = this._localStorage.getStorage();
    }
 
@@ -25,9 +26,9 @@ export class ListconversationsComponent implements OnInit {
   }
 
   StartConversation(Id: String) {
-    this.ConversationService.getConversationOne(this.User.Token, Id).toPromise().then(conversation => {
+    this.ConversationService.getConversationOne(this.User.Token, Id).subscribe(conversation => {
       this.Change(conversation, true);
-    }).catch(err => {
+    }, err => {
       iziToast.error({
         title: 'Error',
         message: 'Ha ocurrido un error vuelva a intentar'
@@ -36,7 +37,15 @@ export class ListconversationsComponent implements OnInit {
   }
 
   StartConversationGroup(Id: String) {
-    
+    console.log(this.GroupService);
+    this.GroupService.getGroup(this.User.Token, Id).subscribe(group => {
+      console.log(group);
+    }, err => {
+      iziToast.error({
+        title: 'Error',
+        message: 'Ha ocurrido un error vuelva a intentar'
+      });
+    });
   }
 
 }

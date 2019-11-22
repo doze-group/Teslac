@@ -12,6 +12,15 @@ exports._Get = (req, res) => {
         });
 }
 
+exports._GetId = (req, res) => {
+    Group.findById(req.params.Id).where('Members').in([req.headers._id])
+        .populate({ path: 'Members', populate: { path: 'Members', select: '-Password -CreateAt -Description -Username -Institutional -Email' } }).then(groups => {
+            return res.status(groups !== null ? 200 : 404).send(groups !== null ? groups : {});
+        }).catch(err => {
+            return res.status(406).send(err);
+        });
+}
+
 /**
  * save new group
  */

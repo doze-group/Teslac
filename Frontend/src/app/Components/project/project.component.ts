@@ -129,9 +129,9 @@ export class ProjectComponent implements OnInit {
 
   deleteProject() {
     this.questionToast('¿Seguro de eliminar este projecto?', () => {
-      this.ProjectService.deleteProject(this.User.Token, this.Project._id).toPromise().then(project => {
-        this.routing.navigate(['/home']);
-      }).catch(err => {
+      this.ProjectService.deleteProject(this.User.Token, this.Project._id).subscribe(project => {
+        this.routing.navigate(['/profile']);
+      }, err => {
         iziToast.error({
           title: 'Error',
           message: 'Ha ocurrido un error'

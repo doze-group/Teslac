@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'api',
+  apiUrl: '//localhost:3000',
   Encrypt: 'sfkhehfuewfhefheoIFHIFEHFIOEWGHEWIGOHasfe<g<e<24<22<24242-.4-.2{+´2422',
   apiUrlLogin: '/api/user/login/',
   apiUrlUser: '/api/user/',
