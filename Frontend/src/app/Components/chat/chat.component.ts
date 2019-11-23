@@ -5,7 +5,10 @@ import { ChatService } from 'src/app/Services/chat.service';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { User } from 'src/app/Models/user';
-
+import { Conversation } from 'src/app/Models/conversation';
+import { Group } from 'src/app/Models/group';
+import { is } from 'typescript-is';
+import { GroupService } from 'src/app/Services/group.service';
 @Component({
   selector: 'App-Chat',
   templateUrl: './chat.component.html',
@@ -13,18 +16,18 @@ import { User } from 'src/app/Models/user';
 })
 export class ChatComponent implements OnInit {
 
-  @Input() ChatBind: Subject<any>;
+  @Input() ChatBind: Subject<Conversation | Group>;
   @Input() Change: Function;
-  Messages: Subject<Array<any>> = new BehaviorSubject([]);
-  Loading: Subject<boolean> = new BehaviorSubject(false);
-  Chat: any = {};
+  Messages: Subject<Array<Message>> = new BehaviorSubject([]);
+  Loading: Subject<boolean> = new BehaviorSubject(true);
+  Chat: any;
   isGroup: boolean = false;
   Icons: any[] = [faLocationArrow, faHandPointLeft];
   LoadingMessage: Subject<boolean> = new BehaviorSubject(false);
   User: User;
   Suscriptions: Array<Subscription> = [];
 
-  constructor(private ChatService: ChatService, private ConversationService: ConversationService, private _localstorage: LocalStorageService) { 
+  constructor(private ChatService: ChatService, private ConversationService: ConversationService, private _localstorage: LocalStorageService, private GroupService: GroupService) {
     this.User = this._localstorage.getStorage();
   }
 
@@ -43,12 +46,14 @@ export class ChatComponent implements OnInit {
   ngOnInit() {
     this.Suscriptions.push(this.ChatBind.subscribe(chat => {
       if (JSON.stringify(chat) !== '{}') {
-        this.isGroup = chat.UrlImage !== undefined;
-        if (chat.UrlImage === undefined) {
+        this.isGroup = (chat as any).UrlImage !== undefined;
+        if (this.isGroup)
+          this.Chat = chat;
+        else
           this.Chat = Object.assign({ 'UrlImage': chat.Members[0].UrlImage, 'DisplayName': chat.Members[0].DisplayName }, chat);
-        }
+
         this.Messages.next(chat.Messages);
-        this.Loading.next(true);
+        this.Loading.next(false);
         setTimeout(() => {
           document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
         }, 500);
@@ -113,29 +118,41 @@ export class ChatComponent implements OnInit {
 
   PushMessage() {
     this.LoadingMessage.next(true);
-    this.ConversationService.createMessage(this.User.Token, {
+    if(this.isGroup){
+      this.ServiceImpl(this.GroupService);
+    }else{
+      this.ServiceImpl(this.ConversationService);
+    }
+  }
+
+  ServiceImpl(service: GroupService | ConversationService){
+    service.createMessage(this.User.Token, {
       'Message': (document.getElementById('Message') as any).value,
       'User': this.User._id
     }, this.Chat._id).subscribe(message => {
-      this.ChatService.Emit('Chat:Message', {
-        'Room': this.Chat._id,
-        'Message': message.Messages[message.Messages.length - 1],
-        'Member': {
-          'DisplayName': this.Chat.DisplayName,
-          'UrlImage': this.Chat.UrlImage,
-          'Message': this.isGroup ? this.User.DisplayName + ': ' + message.Messages[message.Messages.length - 1] : message.Messages[message.Messages.length - 1]
-        }
-      });
-      this.Messages.subscribe(messages => {
-        messages.push(message.Messages[message.Messages.length - 1]);
-      }).unsubscribe();
-      this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: 'is not typing' });
-      (document.getElementById('Message') as any).value = '';
-      this.LoadingMessage.next(false);
-      setTimeout(() => {
-        document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
-      }, 100);
+      this.SendMessageSocket(message);
     });
+  }
+
+  SendMessageSocket(message: Conversation | Group){
+    this.ChatService.Emit('Chat:Message', {
+      'Room': this.Chat._id,
+      'Message': message.Messages[message.Messages.length - 1],
+      'Member': {
+        'DisplayName': this.Chat.DisplayName,
+        'UrlImage': this.Chat.UrlImage,
+        'Message': this.isGroup ? this.User.DisplayName + ': ' + message.Messages[message.Messages.length - 1].Message : message.Messages[message.Messages.length - 1].Message
+      }
+    });
+    this.Messages.subscribe(messages => {
+      messages.push(message.Messages[message.Messages.length - 1]);
+    }).unsubscribe();
+    this.ChatService.Emit('Chat:Typing', { Room: this.Chat._id, Username: 'is not typing' });
+    (document.getElementById('Message') as any).value = '';
+    this.LoadingMessage.next(false);
+    setTimeout(() => {
+      document.getElementById('scroll').scrollTop = document.getElementById('scroll').scrollHeight;
+    }, 100);
   }
 
 }

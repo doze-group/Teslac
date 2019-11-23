@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   ConversationsGroup: Subject<Array<Group>> = new BehaviorSubject([]);
   Main: Subject<boolean> = new BehaviorSubject(true);
   Loading: Subject<boolean> = new BehaviorSubject(false);
-  Chat: Subject<any> = new BehaviorSubject({});
+  Chat: Subject<Conversation | Group> = new BehaviorSubject(undefined);
 
   constructor(private ConversationService: ConversationService, private ChatService: ChatService, private GroupService: GroupService, private _localStorage: LocalStorageService) {
     this.User = this._localStorage.getStorage();
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
       this.GroupService.getGroups(this.User.Token).subscribe(groups => {
         this.ConversationsGroup.next(this.FilterMember(groups));
         this.Loading.next(true);
-        this.ChatService.JoinRooms(conversations);
+        this.ChatService.JoinRooms(groups);
       }, (err: HttpErrorResponse) => {
         iziToast.error({
           message: 'Error al encontrar tus datos intente de nuevo'
@@ -65,27 +65,27 @@ export class HomeComponent implements OnInit {
     return filter;
   }
 
-  ChangeMain = (Chat: any = {}, Exits: boolean = false) => {
-    if ('{}' !== JSON.stringify(Chat) && !Exits) {
+  ChangeMain = (Chat: Conversation | Group = undefined, Exits: boolean = false) => {
+    if (Chat !== undefined && !Exits) {
       this.Conversations.subscribe(conversations => {
         conversations.push(Chat);
         this.ChatService.JoinRooms([Chat]);
       }).unsubscribe();
-    } else if ('{}' !== JSON.stringify(Chat)) {
+    } else if (Chat !== undefined) {
       Chat.Members = Chat.Members.filter(item => item._id !== this.User._id);
     }
     this.Chat.next(Chat);
-    this.Main.next('{}' === JSON.stringify(Chat));
+    this.Main.next(Chat === undefined);
   }
 
   HandlerMessage() {
     this.ChatService.Listener('Chat:Message').subscribe(data => {
       this.Chat.subscribe(chat => {
-        if (JSON.stringify(chat) === '{}' && data.Room !== chat._id) {
+        if (chat === undefined || data.Room !== chat._id) {
           iziToast.show({
             title: data.Member.DisplayName,
             class: 'animInsideTrue',
-            message: data.Member.Message.Message,
+            message: data.Member.Message,
             position: 'bottomCenter',
             animateInside: false,
             image: data.Member.UrlImage,
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit {
           });
         }
       }).unsubscribe();
-    })
+    });
   }
 
   LogOut() {

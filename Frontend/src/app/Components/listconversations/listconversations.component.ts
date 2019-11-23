@@ -37,9 +37,8 @@ export class ListconversationsComponent implements OnInit {
   }
 
   StartConversationGroup(Id: String) {
-    console.log(this.GroupService);
     this.GroupService.getGroup(this.User.Token, Id).subscribe(group => {
-      console.log(group);
+      this.Change(group, true);
     }, err => {
       iziToast.error({
         title: 'Error',

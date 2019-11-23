@@ -49,6 +49,19 @@ exports._Put = (req, res) => {
 }
 
 /**
+ * Add message in conversations
+ */
+exports._PushMessage = (req, res) => {
+    Group.findByIdAndUpdate(req.params.Id, { '$push': { 'Messages': req.body } }, { new: true })
+    .where('Members').in([req.headers._id])
+    .then(conversation => {
+        return res.status(conversation !== null ? 200 : 404).send(conversation !== null ? conversation : {});
+    }).catch(err => {
+        return res.status(406).send(err);
+    });
+}
+
+/**
  * delete group
  */
 exports._Delete = (req, res) => {

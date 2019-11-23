@@ -46,6 +46,7 @@ exports._Post = (req, res) => {
  */
 exports._Put = (req, res) => {
     Conversation.findByIdAndUpdate(req.params.Id, { '$push': { 'Messages': req.body } }, { new: true })
+    .where('Members').in([req.headers._id])
     .then(conversation => {
         return res.status(conversation !== null ? 200 : 404).send(conversation !== null ? conversation : {});
     }).catch(err => {
