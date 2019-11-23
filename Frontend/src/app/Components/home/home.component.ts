@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faEdit, faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { ConversationService } from 'src/app/Services/conversation.service';
 import { GroupService } from 'src/app/Services/group.service';
@@ -12,22 +12,53 @@ import { User } from 'src/app/Models/user';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Conversation } from 'src/app/Models/conversation';
+import { trigger, style, animate, transition, group, query } from '@angular/animations';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
+  animations: [
+    trigger('sideContentAnimation', [
+      transition(':enter', [
+        // we set the width of the outer container to 0, and hide the
+        // overflow (so the inner container won't be visible)
+        style({ width: '0px', overflow: 'hidden' }),
+        group([
+          // we animate the outer container width to it's original value
+          animate('250ms ease-out', style({ width: '!' })),
+          // in the same time we translate the inner element all the
+          // way from left to right
+          query('.side-list-content-data-inner', [
+            style({ transform: 'translateX(-110%)' }),
+            group([animate('250ms ease-out', style({ transform: 'translateX(-0%)' }))]),
+          ]),
+        ]),
+      ]),
+      transition(':leave', [
+        style({ overflow: 'hidden' }),
+        group([
+          animate('250ms ease-out', style({ width: '0' })),
+          query('.side-list-content-data-inner', [
+            style({ transform: 'translateX(-0%)' }),
+            group([animate('250ms ease-out', style({ transform: 'translateX(-110%)' }))]),
+          ]),
+        ]),
+      ]),
+    ]),
+  ],
   styleUrls: ['./home.component.sass']
 })
 export class HomeComponent implements OnInit {
 
   User: User;
-  Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faUsers, faEdit];
+  Icons: Array<any> = [faUsers, faSignOutAlt, faAngleDoubleDown, faPlusCircle, faUserTag, faUsers, faEdit, faTimes, faBars];
   FormControl: FormGroup = new Forms().FormGroup();
   Submited: boolean = false;
   Conversations: Subject<Array<Conversation>> = new BehaviorSubject([]);
   ConversationsGroup: Subject<Array<Group>> = new BehaviorSubject([]);
   Main: Subject<boolean> = new BehaviorSubject(true);
   Loading: Subject<boolean> = new BehaviorSubject(false);
+  ShowMenu: Subject<boolean> = new BehaviorSubject(false);
   Chat: Subject<Conversation | Group> = new BehaviorSubject(undefined);
 
   constructor(private ConversationService: ConversationService, private ChatService: ChatService, private GroupService: GroupService, private _localStorage: LocalStorageService) {
@@ -139,6 +170,13 @@ export class HomeComponent implements OnInit {
         });
       });
     }
+  }
+
+  TranslateElement() {
+    this.ShowMenu.next(true);
+    setTimeout(() => {
+      this.ShowMenu.next(false);
+    }, 3000);
   }
 
 }

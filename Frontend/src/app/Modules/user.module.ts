@@ -21,6 +21,7 @@ import { environment } from 'src/environments/environment';
 import { LocalStorageService } from '../Services/local-storage.service';
 import { TaskComponent } from '../Components/task/task.component';
 import { ConfigProjectComponent } from '../Components/config-project/config-project.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { ConfigProjectComponent } from '../Components/config-project/config-proj
     ConfigProjectComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     CommonModule,
     ReactiveFormsModule,
     AppRoutingModule,

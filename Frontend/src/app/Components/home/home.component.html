@@ -1,6 +1,6 @@
 <div class="row mx-0" style="height: 100%">
-    <nav class="col-md-3 col-xl-2 d-none d-md-block bg-transparent border-right">
-        <div class="row pt-3 justify.content-center mx-0 text-dark border-bottom">
+    <nav class="col-md-3 col-xl-2 d-block bg-transparent border-right" @sideContentAnimation id="nav" *ngIf="this.ShowMenu | async">
+        <div class="row pt-3 justify.content-center mx-0 text-dark border-bottom side-list-content-data-inner">
             <div class="col align-self-center">
                 <img [src]="this.User.UrlImage" class="rounded-circle float-left pb-1"
                     style="height: 60px; width: 60px;" onerror="this.src = '../../assets/Images/errorImage.svg'"
@@ -12,7 +12,7 @@
                 </a>
             </div>
         </div>
-        <div class="row w-100 justify-content-between mx-0 py-1 border-bottom">
+        <div class="row w-100 justify-content-between mx-0 py-1 border-bottom side-list-content-data-inner">
             <button type="button" class="btn btn-link text-dark" (click)="ChangeMain()">
                 <fa-icon [icon]="Icons[0]" size="lg"></fa-icon>
             </button>
@@ -20,7 +20,7 @@
                 <fa-icon [icon]="Icons[1]" size="lg"></fa-icon>
             </button>
         </div>
-        <div class="row pt-1 justify-content-center">
+        <div class="row pt-1 justify-content-center side-list-content-data-inner">
             <div class="accordion w-100" id="accordionExample">
                 <div class="card bg-transparent w-100">
                     <div class="card-header" id="headingOne">
@@ -79,7 +79,17 @@
             </div>
         </div>
     </nav>
-    <main role="main" class="col-md-9 ml-sm-auto col-xl-10 pt-3 px-4 h-100">
+    <div class="col-auto ml-2">
+        <div class="row pt-3 justify-content-center">
+            <button type="button" class="btn btn-primary btn-lg rounded-circle" (click)="TranslateElement()">
+                <fa-icon [icon]="Icons[7]" *ngIf="this.ShowMenu | async; else other"></fa-icon>
+                <ng-template #other>
+                    <fa-icon [icon]="Icons[8]"></fa-icon>
+                </ng-template>
+            </button>
+        </div>
+    </div>
+    <main role="main" class="col ml-sm-auto pt-3 px-4 h-100">
         <div *ngIf="Loading | async; else noLoad">
             <div *ngIf="Main | async; else elseTemplate">
                 <ListUsers [Conversations]="Conversations" [Change]="ChangeMain"></ListUsers>
@@ -117,8 +127,9 @@
                                     <fa-icon [icon]="Icons[4]"></fa-icon>
                                 </span>
                             </div>
-                            <input type="text" class="form-control" id="DisplayName" placeholder="Nombre" aria-describedby="DisplayName"
-                                required minLength="4" maxLength="30" formControlName="DisplayName" />
+                            <input type="text" class="form-control" id="DisplayName" placeholder="Nombre"
+                                aria-describedby="DisplayName" required minLength="4" maxLength="30"
+                                formControlName="DisplayName" />
                             <div class="invalid-feedback">Nombre Invalido</div>
                         </div>
                     </div>
