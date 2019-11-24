@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
     if (this.FormControl.valid) {
       this.Loading.next(true);
       this.Auth.Login(this.FormControl.value).subscribe(user => {
+        localStorage.setItem('Moment', new Date().toJSON());
         this._localstorage.setItem(user);
         this._router.navigate(['/home']);
       }, (err: HttpErrorResponse) => {

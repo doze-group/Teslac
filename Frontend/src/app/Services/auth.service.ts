@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { UserLogin, UserRegistrer, User } from '../Models/user';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -20,11 +20,13 @@ export class AuthService {
     return this.Http.post<User>(environment.apiUrlUser, User);
   }
 
-  isAuthenticated(): boolean {
-    const User = localStorage.getItem('User');
-    if (User != null){
-      return true;
-    }
-    return false;
+  isAuthenticated(Token: String): Observable<User> {
+    return this.Http.get<User>(environment.apiUrlUser + 'id', {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Accept-Type': 'application/json',
+        'Authorization': 'Bearer ' + Token
+      })
+    });
   }
 }

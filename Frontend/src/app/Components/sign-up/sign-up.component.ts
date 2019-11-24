@@ -31,9 +31,9 @@ export class SignUpComponent implements OnInit {
 
  async onSubmit() {
     this.Loading.next(true);
-    console.log(this.FormControl.valid);
     if (this.FormControl.valid) {
       await this.Auth.SignUp(this.FormControl.value as UserRegistrer).subscribe(user => {
+        localStorage.setItem('Moment', new Date().toJSON());
         this._localStorage.setItem(user);
         this._router.navigate(['/home']);
       }, (err: HttpErrorResponse) => {
