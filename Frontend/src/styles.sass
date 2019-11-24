@@ -16,25 +16,8 @@ body, html
 .full
     height: 100%
 
-@media (max-height: 600px)
-    .chat
-        height: 450px
-
-@media (min-height: 601px)
-    .chat
-        height: 540px
-
-@media (min-height: 700px)
-    .chat
-        height: 650px
-
-@media (min-height: 800px) 
-    .chat
-        height: 785px
-
-@media (min-height: 1024px) 
-    .chat
-        height: 850px
+.chat
+    height: calc(100vh - 80px)
 
 ::-webkit-scrollbar-track
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3)

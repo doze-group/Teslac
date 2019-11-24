@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
   Main: Subject<boolean> = new BehaviorSubject(true);
   Loading: Subject<boolean> = new BehaviorSubject(false);
   ShowMenu: Subject<boolean> = new BehaviorSubject(false);
+  ShowMenuIn: boolean = false;
   Chat: Subject<Conversation | Group> = new BehaviorSubject(undefined);
 
   constructor(private ConversationService: ConversationService, private ChatService: ChatService, private GroupService: GroupService, private _localStorage: LocalStorageService) {
@@ -172,11 +173,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  TranslateElement() {
-    this.ShowMenu.next(true);
-    setTimeout(() => {
-      this.ShowMenu.next(false);
-    }, 3000);
+  async TranslateElement() {
+    this.ShowMenu.next(!this.ShowMenuIn);
+    this.ShowMenuIn = !this.ShowMenuIn;
   }
 
 }
