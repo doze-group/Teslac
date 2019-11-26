@@ -1,1 +1,56 @@
-<p>config-project works!</p>
+<div class="row mx-0 pt-3" style="height: 100%">
+    <div class="col-md-4 col-12 pb-2 pb-md-0">
+        <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-general-list" data-toggle="list"
+                href="#list-general" role="tab" aria-controls="general">General</a>
+            <a class="list-group-item list-group-item-action" id="list-members-list" data-toggle="list"
+                href="#list-members" role="tab" aria-controls="profile">Miembros</a>
+        </div>
+    </div>
+    <div class="col-md-8 col-12">
+        <div class="card bg-transparent chat animated zoomIn">
+            <div class="card-header border-shadow">
+            </div>
+            <div class="card-body border-shadow overflow-auto">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-general" role="tabpanel"
+                        aria-labelledby="list-general-list">
+
+                    </div>
+                    <div class="tab-pane fade" id="list-members" role="tabpanel" aria-labelledby="list-members-list">
+                        <div class="row justify-content-center">
+                            <div class="col-md-8 col-12">
+                                <div class="row">
+                                    <div class="input-group w-100">
+                                        <input class="form-control py-2 border-right-0 border bg-transparent"
+                                            id="search" type="search" placeholder="Buscar por nombre"
+                                            (input)="ChangeInput($event)" />
+                                        <span class="input-group-append">
+                                            <button class="btn btn-link border-left-0 border">
+                                                <fa-icon [icon]="Icons[0]"></fa-icon>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="row pt-3">
+                                    <div class="list-group w-100">
+                                        <div class="list-group-item list-group-item-action animated bounceInRight">
+                                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                                <img src="../../../assets/Images/errorImage.svg" class="rounded-circle"
+                                                    alt="Profile" height="30" width="30"
+                                                    onerror="this.src = '../../../assets/Images/errorImage.svg'" />
+                                                <p class="my-0">PECHERA BATTY</p>
+                                                <button class="btn text-danger">
+                                                    <fa-icon [icon]="Icons[1]" size="lg"></fa-icon>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

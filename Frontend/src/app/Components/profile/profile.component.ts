@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faProjectDiagram, faHeading, faCommentDots, faPlus, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faProjectDiagram, faHeading, faCommentDots, faPlus, faUpload, faCogs } from '@fortawesome/free-solid-svg-icons';
 import { ProjectService } from 'src/app/Services/project.service';
 import iziToast from 'izitoast';
 import { Subject, BehaviorSubject } from 'rxjs';
@@ -18,7 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProfileComponent implements OnInit {
 
-  Icons: Array<any> = [faProjectDiagram, faHeading, faCommentDots, faPlus, faUpload];
+  Icons: Array<any> = [faProjectDiagram, faHeading, faCommentDots, faPlus, faUpload, faCogs];
   FormControl: FormGroup = new Forms().FormProject();
   Loading: boolean = false;
   Submited: boolean = false;

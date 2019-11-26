@@ -8,7 +8,7 @@ export const environment = {
   Encrypt: 'sfkhehfuewfhefheoIFHIFEHFIOEWGHEWIGOHasfe<g<e<24<22<24242-.4-.2{+´2422',
   apiUrlLogin: '/api/user/login/',
   apiUrlUser: '/api/user/',
-  apiUrlUserUpload: '/user/upload/',
+  apiUrlUserUpload: '/api/user/upload/',
   apiUrlConversation: '/api/conversation/',
   apiUrlGroup: '/api/group/',
   apiUrlProject: '/api/project/',

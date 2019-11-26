@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-config-project',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./config-project.component.sass']
 })
 export class ConfigProjectComponent implements OnInit {
+
+  Icons: Array<any> = [faSearch, faTimes];
 
   constructor() { }
 

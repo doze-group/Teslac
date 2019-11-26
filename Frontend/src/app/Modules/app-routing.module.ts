@@ -7,6 +7,7 @@ import { HomeComponent } from '../Components/home/home.component';
 import { AuthGuard } from '../Guards/authguard.service';
 import { AuthService } from '../Services/auth.service';
 import { ProjectComponent } from '../Components/project/project.component';
+import { ConfigProjectComponent } from '../Components/config-project/config-project.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'project/:id', component: ProjectComponent, canActivate: [AuthGuard] },
   { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'project/:id/settings', component: ConfigProjectComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
