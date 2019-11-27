@@ -5,8 +5,8 @@
                 <div class="card text-center shadow">
                     <div class="card-header gradient" style="height: 140px;">
                         <div class="row justify-content-end">
-                            <button class="btn text-white">
-                                <fa-icon [icon]="Icons[5]" size="lg"></fa-icon>
+                            <button class="btn text-white" aria-label="Center Align">
+                                <fa-icon [icon]="Icons[3]" size="lg"></fa-icon>
                             </button>
                         </div>
                     </div>
@@ -21,7 +21,7 @@
                                             style="visibility: hidden;" accept="image/x-png,image/gif,image/jpeg"
                                             (input)="UploadImage($event)" />
                                         <label for="imageUpload" style="cursor: pointer;">
-                                            <fa-icon [icon]="Icons[4]" size="lg"></fa-icon>
+                                            <fa-icon [icon]="Icons[2]" size="lg"></fa-icon>
                                         </label>
                                     </div>
                                 </div>
@@ -44,9 +44,47 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#exampleModal">
-                                <fa-icon [icon]="Icons[3]"></fa-icon>
-                            </a>
+                            <div class="dropdown">
+                                <button class="btn btn-secondary nav-link bg-transparent text-dark" type="button"
+                                    id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <fa-icon [icon]="Icons[1]"></fa-icon>
+                                </button>
+                                <div class="dropdown-menu p-1" aria-labelledby="dropdownMenuButton">
+                                    <form action="javascript:;" [formGroup]="FormControl" (ngSubmit)="onSubmit()"
+                                        [ngClass]="{'was-validated': !FormControl.valid && Submited}">
+                                        <div class="form-group">
+                                            <label for="title">Titulo</label>
+                                            <input type="text" class="form-control" placeholder="Proyecto"
+                                                aria-label="Title" aria-describedby="addon-wrapping"
+                                                formControlName="Title" required minlength="1" maxlength="20"
+                                                id="title">
+                                            <div class="invalid-feedback">
+                                                Ingrese Titulo Válido
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Description">Descripción</label>
+                                            <textarea type="text" class="form-control" placeholder="Descripción"
+                                                aria-label="Description" aria-describedby="addon-wrapping"
+                                                formControlName="Description" required minlength="10" maxlength="120"
+                                                id="Description"></textarea>
+                                            <div class="invalid-feedback">
+                                                Ingrese Descriptción Válido
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary pt-2">
+                                            <div class="spinner-border text-light" role="status"
+                                                *ngIf="LoadingProject | async; else elseTemplate">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <ng-template #elseTemplate>
+                                                Crear
+                                            </ng-template>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +94,7 @@
                     </div>
                     <div class="col-11 col-sm-9 col-md-3" *ngFor="let project of Projects | async">
                         <a class="card border-light shadow-sm animated zoomIn"
-                            [routerLink]="[ '/project', project._id ]" routerLinkActive="active">
+                            [routerLink]="[ '/teslac/project', project._id ]" routerLinkActive="active">
                             <div class="card-header gradient"></div>
                             <div class="card-body">
                                 <div class="row w-100 mx-0">
@@ -70,60 +108,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</div>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Proyecto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form action="javascript:;" [formGroup]="FormControl" (ngSubmit)="onSubmit()"
-                [ngClass]="{'was-validated': !FormControl.valid && Submited}">
-                <div class="modal-body">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <fa-icon [icon]="Icons[1]"></fa-icon>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Proyecto" aria-label="Title"
-                            aria-describedby="addon-wrapping" formControlName="Title" required minlength="1"
-                            maxlength="20">
-                        <div class="invalid-feedback">
-                            Ingrese Titulo Válido
-                        </div>
-                    </div>
-                    <div class="input-group pt-2">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <fa-icon [icon]="Icons[2]"></fa-icon>
-                            </span>
-                        </div>
-                        <textarea type="text" class="form-control" placeholder="Descripción" aria-label="Description"
-                            aria-describedby="addon-wrapping" formControlName="Description" required minlength="10"
-                            maxlength="120"></textarea>
-                        <div class="invalid-feedback">
-                            Ingrese Descriptción Válido
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        <div class="spinner-border text-light" role="status" *ngIf="LoadingProject | async; else elseTemplate">
-                            <span class="sr-only">Loading...</span>
-                        </div>
-                        <ng-template #elseTemplate>
-                            Crear
-                        </ng-template>
-                    </button>
-                </div>
-            </form>
         </div>
     </div>
 </div>

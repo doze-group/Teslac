@@ -12,15 +12,15 @@ import { ConfigProjectComponent } from '../Components/config-project/config-proj
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'teslac',
     pathMatch: 'full'
   },
-  { path: 'login', component: LoginComponent},
-  { path: 'signup', component: SignUpComponent },
-  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'project/:id', component: ProjectComponent, canActivate: [AuthGuard] },
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'project/:id/settings', component: ConfigProjectComponent, canActivate: [AuthGuard] },
+  { path: 'teslac/login', component: LoginComponent},
+  { path: 'teslac/signup', component: SignUpComponent },
+  { path: 'teslac/profile', component: ProfileComponent, canActivate: [AuthGuard] },
+  { path: 'teslac/project/:id', component: ProjectComponent, canActivate: [AuthGuard] },
+  { path: 'teslac', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: 'teslac/project/:id/settings', component: ConfigProjectComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({

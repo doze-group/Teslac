@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
   constructor(private Auth: AuthService, private _router: Router, private _localstorage: LocalStorageService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('User')) this._router.navigate(['/home']);
+    if (localStorage.getItem('User')) this._router.navigate(['/teslac']);
   }
 
   onSubmit() {
@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
       this.Auth.Login(this.FormControl.value).subscribe(user => {
         localStorage.setItem('Moment', new Date().toJSON());
         this._localstorage.setItem(user);
-        this._router.navigate(['/home']);
+        this._router.navigate(['/teslac']);
       }, (err: HttpErrorResponse) => {
         if (err.error instanceof Error) {
           iziToast.error({

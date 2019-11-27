@@ -8,7 +8,7 @@
                     alt="Imagen">
             </div>
             <div class="col align-self-center pb-1">
-                <a [routerLink]="[ '/profile' ]" routerLinkActive="active" class="rounded-circle float-right">
+                <a [routerLink]="[ '/teslac/profile' ]" routerLinkActive="active" class="rounded-circle float-right">
                     <fa-icon [icon]="Icons[6]" size="lg"></fa-icon>
                 </a>
             </div>
@@ -82,7 +82,7 @@
     </nav>
     <div class="col-auto ml-2">
         <div class="row pt-3 justify-content-center">
-            <button type="button" class="btn btn-primary btn-lg rounded-circle" (click)="TranslateElement()">
+            <button type="button" class="btn btn-primary btn-lg rounded-circle" (click)="TranslateElement()" aria-label="menu">
                 <fa-icon [icon]="Icons[7]" *ngIf="this.ShowMenu | async; else other"></fa-icon>
                 <ng-template #other>
                     <fa-icon [icon]="Icons[8]"></fa-icon>

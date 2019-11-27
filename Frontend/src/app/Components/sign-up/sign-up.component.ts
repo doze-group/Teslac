@@ -26,7 +26,7 @@ export class SignUpComponent implements OnInit {
   constructor(private Auth: AuthService, private _router: Router, private _localStorage: LocalStorageService) { }
 
   ngOnInit() {
-    if (localStorage.getItem('User')) this._router.navigate(['/home']);
+    if (localStorage.getItem('User')) this._router.navigate(['/teslac']);
   }
 
  async onSubmit() {
@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit {
       await this.Auth.SignUp(this.FormControl.value as UserRegistrer).subscribe(user => {
         localStorage.setItem('Moment', new Date().toJSON());
         this._localStorage.setItem(user);
-        this._router.navigate(['/home']);
+        this._router.navigate(['/teslac']);
       }, (err: HttpErrorResponse) => {
         if(err.status === 406){
           iziToast.error({message: 'Error verifique los datos ingresados'});

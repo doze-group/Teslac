@@ -4,6 +4,7 @@ import { AppComponent } from '../app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthModule } from './auth.module';
 import { UserModule } from './user.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { UserModule } from './user.module';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    UserModule
+    UserModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

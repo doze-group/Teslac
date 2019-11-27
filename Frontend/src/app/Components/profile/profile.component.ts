@@ -18,7 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ProfileComponent implements OnInit {
 
-  Icons: Array<any> = [faProjectDiagram, faHeading, faCommentDots, faPlus, faUpload, faCogs];
+  Icons: Array<any> = [faProjectDiagram, faPlus, faUpload, faCogs];
   FormControl: FormGroup = new Forms().FormProject();
   Loading: boolean = false;
   Submited: boolean = false;
@@ -60,6 +60,8 @@ export class ProfileComponent implements OnInit {
       await this.User.subscribe(user => {
         this.ProjectService.createProject(user.Token, this.FormControl.value).subscribe(observer => {
           this.Projects.subscribe(projects => {
+            this.FormControl.reset();
+            this.FormControl.setValue({});
             projects.push(observer);
           }).unsubscribe();
         }, (err: HttpErrorResponse) => {

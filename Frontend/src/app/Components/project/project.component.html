@@ -13,10 +13,10 @@
                     <div class="card text-center shadow">
                         <div class="card-header gradient" style="height: 140px;">
                             <div class="row justify-content-end" *ngIf="this.Project.Admin === this.User._id">
-                                <button class="btn text-danger" (click)="this.deleteProject()">
+                                <button class="btn text-danger" (click)="this.deleteProject()" aria-label="delete">
                                     <fa-icon [icon]="Icons[5]" size="lg"></fa-icon>
                                 </button>
-                                <button class="btn text-white">
+                                <button class="btn text-white" aria-label="config">
                                     <fa-icon [icon]="Icons[6]" size="lg"></fa-icon>
                                 </button>
                             </div>
@@ -45,9 +45,25 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" style="cursor:pointer;" data-toggle="modal" data-target="#table">
-                                    <fa-icon [icon]="Icons[3]"></fa-icon>
-                                </a>
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary nav-link bg-transparent text-dark" type="button"
+                                        id="tables" data-toggle="dropdown" aria-haspopup="true"
+                                        aria-expanded="false" aria-label="drop">
+                                        <fa-icon [icon]="Icons[3]"></fa-icon>
+                                    </button>
+                                    <div class="dropdown-menu p-1" aria-labelledby="tables" aria-label="dropM">
+                                        <div class="form-group">
+                                            <label for="TitleTable">Titulo</label>
+                                            <input type="text" class="form-control" placeholder="Tablero Titulo"
+                                                aria-label="Title" aria-describedby="addon-wrapping" required
+                                                minlength="1" maxlength="20" id="TitleTable">
+                                            <div class="invalid-feedback">
+                                                Ingrese Titulo Válido
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary" (click)="createTable()" aria-label="create">Crear</button>
+                                    </div>
+                                </div>
                             </li>
                         </ul>
                     </div>
@@ -80,37 +96,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal Table -->
-    <div class="modal fade" id="table" tabindex="-1" role="dialog" aria-labelledby="table" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalScrollableTitle">Agregar Tablero</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                <fa-icon [icon]="Icons[1]"></fa-icon>
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" placeholder="Tablero Titulo" aria-label="Title"
-                            aria-describedby="addon-wrapping" required minlength="1" maxlength="20" id="TitleTable">
-                        <div class="invalid-feedback">
-                            Ingrese Titulo Válido
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary" (click)="createTable()" data-dismiss="modal"
-                        aria-label="Close">Crear</button>
                 </div>
             </div>
         </div>

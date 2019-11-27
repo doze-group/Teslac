@@ -7,6 +7,7 @@ const CryptoJS = require('crypto-js');
 //get all users
 exports._Get = (req, res) => {
     User.find().select('-Password -CreateAt -Description -Username -Institutional -Email').where('_id').ne(req.headers._id).then((user) => {
+        console.log(user);
         return res.status(user !== null ? 200 : 404).send(user !== null ? user : {});
     }).catch((err) => {
         return res.status(406).send(err);

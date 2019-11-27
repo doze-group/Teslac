@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../Models/user';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,7 @@ export class UserService {
   constructor(private Http: HttpClient) { }
 
   getUsers(Token: String): Observable<Array<User>> {
-    return this.Http.get<Array<User>>('/api/user', { headers: this.Headers(Token) });
+    return this.Http.get<Array<User>>(environment.apiUrlUser, { headers: this.Headers(Token) });
   }
 
   getUserId(Token: String, Id: String): Observable<User> {
