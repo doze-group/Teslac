@@ -14,7 +14,7 @@
                                 <fa-icon [icon]="Icons[4]"></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Documento Identidad" aria-label="Username"
+                        <input type="text" class="form-control" placeholder="Documento Identidad" aria-label="username"
                             aria-describedby="addon-wrapping" formControlName="Username" required minlength="10">
                         <div class="invalid-feedback">
                             Ingrese Documento Válido
@@ -27,7 +27,7 @@
                             </span>
                         </div>
                         <input type="text" class="form-control" placeholder="Código institucional"
-                            aria-label="Institutional" aria-describedby="addon-wrapping" formControlName="Institutional"
+                            aria-label="institutional" aria-describedby="addon-wrapping" formControlName="Institutional"
                             required minlength="10">
                         <div class="invalid-feedback">
                             Ingrese Código institucional Válido
@@ -39,7 +39,7 @@
                                 <fa-icon [icon]="Icons[6]"></fa-icon>
                             </span>
                         </div>
-                        <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="DisplayName"
+                        <input type="text" class="form-control" placeholder="Nombre Completo" aria-label="displayname"
                             aria-describedby="addon-wrapping" formControlName="DisplayName" required minlength="1"
                             maxlength="50">
                         <div class="invalid-feedback">
@@ -52,7 +52,7 @@
                                 <fa-icon [icon]="Icons[1]"></fa-icon>
                             </span>
                         </div>
-                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="Password"
+                        <input type="password" class="form-control" placeholder="Contraseña" aria-label="password"
                             aria-describedby="addon-wrapping" formControlName="Password" required>
                         <div class="invalid-feedback justify-content-start">
                             Contraseña Es Requerida
@@ -64,7 +64,7 @@
                                 <fa-icon [icon]="Icons[3]"></fa-icon>
                             </span>
                         </div>
-                        <input type="email" class="form-control" placeholder="Email" aria-label="Email"
+                        <input type="email" class="form-control" placeholder="Email" aria-label="email"
                             aria-describedby="addon-wrapping" formControlName="Email" required>
                         <div class="invalid-feedback justify-content-start">
                             Email Es Requerido
@@ -85,7 +85,8 @@
                         </div>
                     </div>
                     <div class="form-group pt-3 mb-0">
-                        <button type="submit" class="btn btn-primary w-50 gradient" [disabled]="Loading | async">
+                        <button type="submit" class="btn btn-primary w-50 gradient" [disabled]="Loading | async"
+                            aria-label="enter">
                             <div class="spinner-border text-light" role="status"
                                 *ngIf="Loading | async; else elseTemplate">
                                 <span class="sr-only">Loading...</span>
@@ -96,7 +97,7 @@
                         </button>
                     </div>
                     <div class="form-group pt-1 mb-0">
-                        <a routerLink="/login" routerLinkActive="active">¿Tienes Cuenta?</a>
+                        <a routerLink="/teslac/login" routerLinkActive="active">¿Tienes Cuenta?</a>
                     </div>
                 </form>
             </div>

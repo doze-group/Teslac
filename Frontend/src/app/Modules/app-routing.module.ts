@@ -15,12 +15,12 @@ const routes: Routes = [
     redirectTo: 'teslac',
     pathMatch: 'full'
   },
-  { path: 'teslac/login', component: LoginComponent},
-  { path: 'teslac/signup', component: SignUpComponent },
-  { path: 'teslac/profile', component: ProfileComponent, canActivate: [AuthGuard] },
-  { path: 'teslac/project/:id', component: ProjectComponent, canActivate: [AuthGuard] },
-  { path: 'teslac', component: HomeComponent, canActivate: [AuthGuard] },
-  { path: 'teslac/project/:id/settings', component: ConfigProjectComponent, canActivate: [AuthGuard] },
+  { path: 'teslac/login', loadChildren: '../Components/login/login.module#LoginModule' },
+  { path: 'teslac/signup', loadChildren: '../Components/sign-up/sign-up.module#SignUpModule' },
+  { path: 'teslac/profile', loadChildren: '../Components/profile/profile.module#ProfileModule', canActivate: [AuthGuard] },
+  { path: 'teslac/project/:id', loadChildren: '../Components/project/project.module#ProjectModule', canActivate: [AuthGuard] },
+  { path: 'teslac', loadChildren: '../Components/home/home.module#HomeModule', canActivate: [AuthGuard] },
+  //{ path: 'teslac/project/:id/settings', component: ConfigProjectComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
