@@ -12,7 +12,7 @@ export class ProjectService {
   constructor(private Http: HttpClient) { }
 
   getProjects(Token: String): Observable<Array<Project>> {
-    return this.Http.get<Array<Project>>('/api/project', { headers: this.Headers(Token) });
+    return this.Http.get<Array<Project>>(environment.apiUrlProject, { headers: this.Headers(Token) });
   }
 
   getProjectId(Token: String, Id: String): Observable<Project> {
@@ -20,7 +20,7 @@ export class ProjectService {
   }
 
   createProject(Token: String, Project: ProjectCreate): Observable<Project> {
-    return this.Http.post<Project>('/api/project', Project, { headers: this.Headers(Token) });
+    return this.Http.post<Project>(environment.apiUrlProject, Project, { headers: this.Headers(Token) });
   }
 
   modifyProject(Token: String, Project: any, Id: String): Observable<Project> {

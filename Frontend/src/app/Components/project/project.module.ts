@@ -9,12 +9,14 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ProjectService } from 'src/app/Services/project.service';
 import { LocalStorageService } from 'src/app/Services/local-storage.service';
 import { DragAndDropModule } from 'angular-draggable-droppable';
+import { ConfigProjectComponent } from '../config-project/config-project.component';
 
 
 @NgModule({
   declarations: [
     ProjectComponent,
-    TaskComponent
+    TaskComponent,
+    ConfigProjectComponent
   ],
   imports: [
     CommonModule,
